@@ -405,6 +405,14 @@
     min-width: 180px;
   }
 
+  /* 100% Single-Column Vertical List for Topics */
+  .topics-vertical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* 2-Column Grid for All Subjects Overview */
   .board-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -421,11 +429,12 @@
     background: var(--white);
     color: var(--text-navy);
     border-radius: 16px;
-    padding: 12px 14px;
+    padding: 13px 15px;
     display: flex;
     align-items: center;
     gap: 14px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    width: 100%;
   }
 
   .num-badge {
@@ -477,9 +486,9 @@
   }
 
   .status-pill {
-    padding: 6px 9px;
+    padding: 6px 10px;
     border-radius: 8px;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 900;
     border: none;
     cursor: pointer;
@@ -493,8 +502,8 @@
     background: #F1F5F9;
     border: none;
     color: #334155;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 7px;
     font-weight: 800;
     cursor: pointer;
@@ -506,7 +515,6 @@
   }
 
   .empty-state {
-    grid-column: 1 / -1;
     text-align: center;
     padding: 32px 16px;
     background: rgba(255, 255, 255, 0.05);
@@ -640,7 +648,8 @@
       </div>
     </div>
 
-    <div class="board-grid" id="topics-grid"></div>
+    <!-- Vertical Single-Column Topics List -->
+    <div class="topics-vertical-list" id="topics-grid"></div>
   </div>
 
   <div id="subjects-overview-section" style="display:none;">
