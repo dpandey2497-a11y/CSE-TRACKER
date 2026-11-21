@@ -21,6 +21,7 @@
     --text-navy: #1E3246;
     --text-muted: #5A6E82;
     --green: #16A34A;
+    --emerald: #10B981;
     --amber: #D97706;
     --red: #DC2626;
   }
@@ -39,7 +40,7 @@
     padding-bottom: 60px;
   }
 
-  /* Top Sticky Mode Switcher (PT / MAINS) + Daily Countdown Reminder */
+  /* Top Sticky Mode Switcher (PT / MAINS) + Daily Countdown + Fullscreen */
   .top-mode-bar {
     position: sticky;
     top: 0;
@@ -65,9 +66,9 @@
 
   .mode-tab-btn {
     border: none;
-    padding: 8px 16px;
+    padding: 8px 14px;
     border-radius: 9px;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 900;
     letter-spacing: 0.5px;
     cursor: pointer;
@@ -86,21 +87,34 @@
   .top-right-tools {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
   }
 
   .reminder-pill {
     background: rgba(244, 200, 68, 0.14);
     border: 1.5px solid var(--gold);
     color: var(--gold);
-    padding: 7px 12px;
+    padding: 7px 11px;
     border-radius: 10px;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 900;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
+    white-space: nowrap;
+  }
+
+  .fullscreen-btn {
+    background: var(--navy-light);
+    border: 1.5px solid rgba(244, 200, 68, 0.55);
+    color: var(--white);
+    padding: 7px 11px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
     white-space: nowrap;
   }
 
@@ -109,9 +123,9 @@
     background: var(--gold);
     color: var(--text-navy);
     border: none;
-    padding: 7px 12px;
+    padding: 7px 11px;
     border-radius: 10px;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 900;
     cursor: pointer;
     white-space: nowrap;
@@ -174,7 +188,52 @@
     width: 100%;
     background: var(--gold);
     border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  /* Overall Section Progress Bar Box */
+  .progress-card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1.5px solid rgba(244, 200, 68, 0.4);
+    border-radius: 14px;
+    padding: 13px 16px;
     margin-bottom: 18px;
+  }
+
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 9px;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .progress-label {
+    color: #F8FAFC;
+  }
+
+  .progress-pct {
+    color: var(--gold);
+    font-size: 1.05rem;
+    font-weight: 900;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 12px;
+    background: var(--navy-dark);
+    border-radius: 99px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #10B981, #34D399);
+    border-radius: 99px;
+    transition: width 0.35s ease;
   }
 
   /* Top SUBJECT Tab & Dropdown Bar */
@@ -347,7 +406,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .active-sub-name {
@@ -360,6 +419,23 @@
     font-size: 0.9rem;
     font-weight: 700;
     color: #E2E8F0;
+  }
+
+  /* Subject-specific mini progress bar */
+  .sub-mini-track {
+    width: 100%;
+    height: 7px;
+    background: var(--navy-dark);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+
+  .sub-mini-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gold);
+    transition: width 0.3s ease;
   }
 
   .add-topic-bar {
@@ -542,7 +618,7 @@
 </head>
 <body>
 
-<!-- Top Sticky PT / MAINS Switcher & Daily Countdown Reminder -->
+<!-- Top Sticky PT / MAINS Switcher + Daily Countdown + Fullscreen -->
 <div class="top-mode-bar">
   <div class="mode-tabs">
     <button class="mode-tab-btn active" id="tab-pt" onclick="switchMode('pt')">PT (PRELIMS)</button>
@@ -552,6 +628,9 @@
     <button class="install-pwa-btn" id="install-pwa-btn" onclick="installPWA()">📲 Install</button>
     <button class="reminder-pill" id="countdown-pill" onclick="openDateModal()" title="Exam Date Badlein">
       ⏳ 56 दिन शेष 📅
+    </button>
+    <button class="fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()" title="Full Display">
+      ⛶ Full
     </button>
   </div>
 </div>
@@ -572,6 +651,17 @@
 
   <!-- Golden Line -->
   <div class="gold-line"></div>
+
+  <!-- Overall Progress Bar (PT / MAINS) -->
+  <div class="progress-card">
+    <div class="progress-top">
+      <span class="progress-label" id="overall-progress-text">PT Progress: 0 / 0 Topics Completed</span>
+      <span class="progress-pct" id="overall-progress-pct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="overall-progress-fill"></div>
+    </div>
+  </div>
 
   <!-- Top SUBJECT Tab + Customize Subjects Dropdown -->
   <div class="subject-tab-bar">
@@ -602,7 +692,10 @@
     <div class="active-subject-panel">
       <div class="active-sub-top">
         <div class="active-sub-name" id="active-sub-heading">01. इतिहास (HISTORY)</div>
-        <div class="active-sub-stats" id="active-sub-stats">0 / 0 Completed</div>
+        <div class="active-sub-stats" id="active-sub-stats">0 / 0 Completed (0%)</div>
+      </div>
+      <div class="sub-mini-track">
+        <div class="sub-mini-fill" id="sub-mini-fill"></div>
       </div>
       <div class="add-topic-bar">
         <input type="text" id="new-topic-hi" class="board-input" placeholder="Topic ka naam likhein (Hindi/English)...">
@@ -766,6 +859,26 @@
       });
     }
   }
+
+  function toggleFullscreen() {
+    const btn = document.getElementById('fullscreen-btn');
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => {
+        btn.textContent = '⛶ Exit';
+      }).catch(() => {});
+    } else {
+      document.exitFullscreen().then(() => {
+        btn.textContent = '⛶ Full';
+      }).catch(() => {});
+    }
+  }
+
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) {
+      btn.textContent = document.fullscreenElement ? '⛶ Exit' : '⛶ Full';
+    }
+  });
 
   function getCurrentSection() {
     return appState[appState.activeMode];
@@ -1014,6 +1127,20 @@
       ? 'Customize MAINS Subjects (Add / Select)'
       : 'Customize PT Subjects (Add / Select)';
 
+    // Calculate Overall Section Progress (PT or MAINS)
+    let allSectionTopics = 0;
+    let allSectionDone = 0;
+    sec.subjects.forEach(s => {
+      allSectionTopics += s.topics.length;
+      allSectionDone += s.topics.filter(t => t.status === 'done').length;
+    });
+    const overallPct = allSectionTopics === 0 ? 0 : Math.round((allSectionDone / allSectionTopics) * 100);
+    const modeTag = isMains ? 'MAINS' : 'PT';
+    document.getElementById('overall-progress-text').textContent =
+      `${modeTag} Overall Progress: ${allSectionDone} / ${allSectionTopics} Topics Completed`;
+    document.getElementById('overall-progress-pct').textContent = `${overallPct}%`;
+    document.getElementById('overall-progress-fill').style.width = `${overallPct}%`;
+
     // Ensure valid selected subject
     if (!sec.subjects.some(s => s.id === sec.selectedSubjectId) && sec.subjects.length > 0) {
       sec.selectedSubjectId = sec.subjects[0].id;
@@ -1053,15 +1180,18 @@
       viewBtn.textContent = '📖 Back to Topics View';
 
       const allGrid = document.getElementById('all-subjects-grid');
-      allGrid.innerHTML = sec.subjects.map((s, idx) => `
-        <div class="board-card" style="cursor:pointer;" onclick="selectSubject(${s.id})">
-          <div class="num-badge">${padNum(idx + 1)}</div>
-          <div class="card-text-wrap">
-            <div class="card-title-hi">${s.hi}</div>
-            <div class="card-title-en">${s.en} • ${s.topics.length} TOPICS</div>
+      allGrid.innerHTML = sec.subjects.map((s, idx) => {
+        const sDone = s.topics.filter(t => t.status === 'done').length;
+        return `
+          <div class="board-card" style="cursor:pointer;" onclick="selectSubject(${s.id})">
+            <div class="num-badge">${padNum(idx + 1)}</div>
+            <div class="card-text-wrap">
+              <div class="card-title-hi">${s.hi}</div>
+              <div class="card-title-en">${s.en} • ${sDone}/${s.topics.length} COMPLETED</div>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     } else {
       topicsSection.style.display = 'block';
       overviewSection.style.display = 'none';
@@ -1069,10 +1199,12 @@
 
       if (activeSub) {
         const doneCount = activeSub.topics.filter(t => t.status === 'done').length;
+        const subPct = activeSub.topics.length === 0 ? 0 : Math.round((doneCount / activeSub.topics.length) * 100);
         document.getElementById('active-sub-heading').textContent =
           `${padNum(activeIdx + 1)}. ${activeSub.hi} (${activeSub.en})`;
         document.getElementById('active-sub-stats').textContent =
-          `${doneCount} / ${activeSub.topics.length} Topics Completed`;
+          `${doneCount} / ${activeSub.topics.length} Completed (${subPct}%)`;
+        document.getElementById('sub-mini-fill').style.width = `${subPct}%`;
 
         const topicsGrid = document.getElementById('topics-grid');
         if (activeSub.topics.length === 0) {
