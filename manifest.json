@@ -1,0 +1,19 @@
+{
+  "name": "CSE TRACKER",
+  "short_name": "CSE TRACKER",
+  "description": "PT & MAINS Custom Subject and Topic Tracker",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#223548",
+  "theme_color": "#223548",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23223548'/%3E%3Crect x='28' y='28' width='456' height='456' rx='90' fill='none' stroke='%23F4C844' stroke-width='12'/%3E%3Ccircle cx='256' cy='172' r='56' fill='none' stroke='%23F4C844' stroke-width='12'/%3E%3Ccircle cx='256' cy='172' r='22' fill='%23F4C844'/%3E%3Cpath d='M256 96 V118 M256 226 V248 M180 172 H202 M310 172 H332' stroke='%23F4C844' stroke-width='10' stroke-linecap='round'/%3E%3Ctext x='256' y='328' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='108' letter-spacing='4' fill='%23FFFFFF'%3ECSE%3C/text%3E%3Crect x='126' y='352' width='260' height='6' rx='3' fill='%23F4C844'/%3E%3Ctext x='256' y='405' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='38' letter-spacing='8' fill='%23F4C844'%3ETRACKER%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
