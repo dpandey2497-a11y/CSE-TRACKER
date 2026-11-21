@@ -8,21 +8,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>CSE TRACKER</title>
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23223548'/%3E%3Crect x='28' y='28' width='456' height='456' rx='90' fill='none' stroke='%23F4C844' stroke-width='12'/%3E%3Ccircle cx='256' cy='172' r='56' fill='none' stroke='%23F4C844' stroke-width='12'/%3E%3Ccircle cx='256' cy='172' r='22' fill='%23F4C844'/%3E%3Cpath d='M256 96 V118 M256 226 V248 M180 172 H202 M310 172 H332' stroke='%23F4C844' stroke-width='10' stroke-linecap='round'/%3E%3Ctext x='256' y='328' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='108' letter-spacing='4' fill='%23FFFFFF'%3ECSE%3C/text%3E%3Crect x='126' y='352' width='260' height='6' rx='3' fill='%23F4C844'/%3E%3Ctext x='256' y='405' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='38' letter-spacing='8' fill='%23F4C844'%3ETRACKER%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23223548'/%3E%3Crect x='28' y='28' width='456' height='456' rx='90' fill='none' stroke='%23F4C844' stroke-width='12'/%3E%3Ccircle cx='256' cy='172' r='56' fill='none' stroke='%23F4C844' stroke-width='12'/%3E%3Ccircle cx='256' cy='172' r='22' fill='%23F4C844'/%3E%3Cpath d='M256 96 V118 M256 226 V248 M180 172 H202 M310 172 H332' stroke='%23F4C844' stroke-width='10' stroke-linecap='round'/%3E%3Ctext x='256' y='328' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='108' letter-spacing='4' fill='%23FFFFFF'%3ECSE%3C/text%3E%3Crect x='126' y='352' width='260' height='6' rx='3' fill='%23F4C844'/%3E%3Ctext x='256' y='405' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='38' letter-spacing='8' fill='%23F4C844'%3ETRACKER%3C/text%3E%3C/svg%3E">
 <style>
   :root {
     --navy-bg: #223548;
     --navy-dark: #1A2A3A;
     --navy-light: #2D455E;
     --gold: #F4C844;
-    --gold-dark: #D9AC26;
     --white: #FFFFFF;
     --text-navy: #1E3246;
-    --text-muted: #5A6E82;
-    --green: #16A34A;
-    --emerald: #10B981;
-    --amber: #D97706;
     --red: #DC2626;
   }
 
@@ -40,7 +33,6 @@
     padding-bottom: 60px;
   }
 
-  /* Top Sticky Mode Switcher (PT / MAINS) + Daily Countdown + Fullscreen */
   .top-mode-bar {
     position: sticky;
     top: 0;
@@ -70,18 +62,15 @@
     border-radius: 9px;
     font-size: 0.9rem;
     font-weight: 900;
-    letter-spacing: 0.5px;
     cursor: pointer;
     background: transparent;
     color: #CBD5E1;
-    transition: all 0.2s;
     white-space: nowrap;
   }
 
   .mode-tab-btn.active {
     background: var(--gold);
     color: var(--text-navy);
-    box-shadow: 0 2px 8px rgba(244, 200, 68, 0.35);
   }
 
   .top-right-tools {
@@ -100,9 +89,6 @@
     font-size: 0.88rem;
     font-weight: 900;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
     white-space: nowrap;
   }
 
@@ -118,26 +104,12 @@
     white-space: nowrap;
   }
 
-  .install-pwa-btn {
-    display: none;
-    background: var(--gold);
-    color: var(--text-navy);
-    border: none;
-    padding: 7px 11px;
-    border-radius: 10px;
-    font-size: 0.86rem;
-    font-weight: 900;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-
   .board-wrapper {
     max-width: 960px;
     margin: 0 auto;
     padding: 18px 16px;
   }
 
-  /* Header Section matching the Smart Board */
   .exam-banner {
     font-size: 0.85rem;
     font-weight: 800;
@@ -182,7 +154,6 @@
     margin-bottom: 14px;
   }
 
-  /* Signature Golden Horizontal Divider */
   .gold-line {
     height: 4px;
     width: 100%;
@@ -191,7 +162,6 @@
     margin-bottom: 16px;
   }
 
-  /* Overall Section Progress Bar Box */
   .progress-card {
     background: rgba(255, 255, 255, 0.07);
     border: 1.5px solid rgba(244, 200, 68, 0.4);
@@ -207,10 +177,6 @@
     margin-bottom: 9px;
     font-size: 0.95rem;
     font-weight: 800;
-  }
-
-  .progress-label {
-    color: #F8FAFC;
   }
 
   .progress-pct {
@@ -236,7 +202,6 @@
     transition: width 0.35s ease;
   }
 
-  /* Top SUBJECT Tab & Dropdown Bar */
   .subject-tab-bar {
     position: relative;
     display: flex;
@@ -257,7 +222,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
 
   .overview-toggle-btn {
@@ -271,7 +235,6 @@
     cursor: pointer;
   }
 
-  /* Customize Subjects Dropdown Menu */
   .subject-dropdown {
     display: none;
     position: absolute;
@@ -297,7 +260,6 @@
     color: var(--gold);
     margin-bottom: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
   }
 
   .custom-sub-form {
@@ -319,10 +281,6 @@
     font-size: 0.95rem;
     font-weight: 600;
     outline: none;
-  }
-
-  .board-input::placeholder {
-    color: #94A3B8;
   }
 
   .btn-gold {
@@ -391,7 +349,6 @@
     cursor: pointer;
   }
 
-  /* Selected Subject Active Header & Add Topic Bar */
   .active-subject-panel {
     background: rgba(255, 255, 255, 0.06);
     border: 1.5px solid rgba(244, 200, 68, 0.35);
@@ -421,7 +378,6 @@
     color: #E2E8F0;
   }
 
-  /* Subject-specific mini progress bar */
   .sub-mini-track {
     width: 100%;
     height: 7px;
@@ -449,7 +405,6 @@
     min-width: 180px;
   }
 
-  /* 2-Column Smart Board Grid for Topics / Subjects */
   .board-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -462,7 +417,6 @@
     }
   }
 
-  /* White Pill/Rounded Card matching the uploaded image */
   .board-card {
     background: var(--white);
     color: var(--text-navy);
@@ -472,11 +426,6 @@
     align-items: center;
     gap: 14px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
-    transition: transform 0.15s ease;
-  }
-
-  .board-card:active {
-    transform: scale(0.99);
   }
 
   .num-badge {
@@ -574,7 +523,6 @@
     flex-wrap: wrap;
   }
 
-  /* Custom Modal */
   .modal-backdrop {
     display: none;
     position: fixed;
@@ -618,26 +566,19 @@
 </head>
 <body>
 
-<!-- Top Sticky PT / MAINS Switcher + Daily Countdown + Fullscreen -->
 <div class="top-mode-bar">
   <div class="mode-tabs">
     <button class="mode-tab-btn active" id="tab-pt" onclick="switchMode('pt')">PT (PRELIMS)</button>
     <button class="mode-tab-btn" id="tab-mains" onclick="switchMode('mains')">MAINS</button>
   </div>
   <div class="top-right-tools">
-    <button class="install-pwa-btn" id="install-pwa-btn" onclick="installPWA()">📲 Install</button>
-    <button class="reminder-pill" id="countdown-pill" onclick="openDateModal()" title="Exam Date Badlein">
-      ⏳ 56 दिन शेष 📅
-    </button>
-    <button class="fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()" title="Full Display">
-      ⛶ Full
-    </button>
+    <button class="reminder-pill" id="countdown-pill" onclick="openDateModal()">⏳ 56 दिन शेष 📅</button>
+    <button class="fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()">⛶ Full</button>
   </div>
 </div>
 
 <div class="board-wrapper">
-  <!-- Smart Board Header -->
-  <div class="exam-banner" id="exam-banner" onclick="editBanner()" title="Banner edit karne ke liye tap karein">
+  <div class="exam-banner" id="exam-banner" onclick="editBanner()">
     72nd BPSC PT | EXAM DATE: 17 JANUARY 2027 ✏️
   </div>
 
@@ -649,13 +590,11 @@
 
   <div class="subtitle" id="subtitle-text">सभी प्रमुख क्षेत्रों पर संतुलित तैयारी</div>
 
-  <!-- Golden Line -->
   <div class="gold-line"></div>
 
-  <!-- Overall Progress Bar (PT / MAINS) -->
   <div class="progress-card">
     <div class="progress-top">
-      <span class="progress-label" id="overall-progress-text">PT Progress: 0 / 0 Topics Completed</span>
+      <span id="overall-progress-text">PT Overall Progress: 0 / 0 Topics Completed</span>
       <span class="progress-pct" id="overall-progress-pct">0%</span>
     </div>
     <div class="progress-track">
@@ -663,7 +602,6 @@
     </div>
   </div>
 
-  <!-- Top SUBJECT Tab + Customize Subjects Dropdown -->
   <div class="subject-tab-bar">
     <button class="subject-tab-btn" onclick="toggleDropdown(event)">
       <span>📚 SUBJECT TAB</span>
@@ -675,7 +613,6 @@
       🗂️ All Subjects Board
     </button>
 
-    <!-- Dropdown Menu -->
     <div class="subject-dropdown" id="subject-dropdown" onclick="event.stopPropagation()">
       <div class="dropdown-heading" id="dropdown-mode-label">Customize PT Subjects (Add / Select)</div>
       <div class="custom-sub-form">
@@ -687,7 +624,6 @@
     </div>
   </div>
 
-  <!-- Active Subject Topic Entry & Display -->
   <div id="topics-view-section">
     <div class="active-subject-panel">
       <div class="active-sub-top">
@@ -704,16 +640,13 @@
       </div>
     </div>
 
-    <!-- Numbered White Cards Grid for Topics -->
     <div class="board-grid" id="topics-grid"></div>
   </div>
 
-  <!-- 2-Column All Subjects Overview Grid -->
   <div id="subjects-overview-section" style="display:none;">
     <div class="board-grid" id="all-subjects-grid"></div>
   </div>
 
-  <!-- Backup & Restore -->
   <div class="footer-tools">
     <button class="overview-toggle-btn" onclick="exportBackup()">⬇️ Backup JSON</button>
     <label class="overview-toggle-btn" style="cursor:pointer;">
@@ -723,7 +656,6 @@
   </div>
 </div>
 
-<!-- Custom Edit Modal -->
 <div class="modal-backdrop" id="edit-modal">
   <div class="modal-box">
     <div class="modal-title" id="modal-title">Edit</div>
@@ -736,11 +668,10 @@
   </div>
 </div>
 
-<!-- Exam Countdown Date Modal -->
 <div class="modal-backdrop" id="date-modal">
   <div class="modal-box">
     <div class="modal-title" id="date-modal-title">Target Exam Date Set Karein</div>
-    <div style="font-size:0.88rem;color:#CBD5E1;">Is date ke hisab se daily bache hue din (Countdown) automatically update honge:</div>
+    <div style="font-size:0.88rem;color:#CBD5E1;">Is date ke hisab se daily bache hue din automatically update honge:</div>
     <input type="date" id="exam-date-input" class="board-input">
     <div class="modal-actions">
       <button class="overview-toggle-btn" onclick="closeDateModal()">Cancel</button>
@@ -826,7 +757,12 @@
     }
   };
 
-  let appState = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  let appState = null;
+  try {
+    appState = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  } catch (e) {
+    appState = null;
+  }
   if (!appState || !appState.pt || !appState.mains) {
     appState = JSON.parse(JSON.stringify(defaultData));
   }
@@ -834,50 +770,29 @@
   if (!appState.mains.targetDate) appState.mains.targetDate = '2027-04-25';
 
   let isOverview = false;
-  let deferredInstallPrompt = null;
 
-  // Register Service Worker for Chrome Android Installability
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js').catch(function() {});
     });
-  }
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredInstallPrompt = e;
-    const btn = document.getElementById('install-pwa-btn');
-    if (btn) btn.style.display = 'inline-block';
-  });
-
-  function installPWA() {
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      deferredInstallPrompt.userChoice.then(() => {
-        deferredInstallPrompt = null;
-        document.getElementById('install-pwa-btn').style.display = 'none';
-      });
-    }
   }
 
   function toggleFullscreen() {
     const btn = document.getElementById('fullscreen-btn');
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().then(() => {
+      document.documentElement.requestFullscreen().then(function() {
         btn.textContent = '⛶ Exit';
-      }).catch(() => {});
+      }).catch(function() {});
     } else {
-      document.exitFullscreen().then(() => {
+      document.exitFullscreen().then(function() {
         btn.textContent = '⛶ Full';
-      }).catch(() => {});
+      }).catch(function() {});
     }
   }
 
-  document.addEventListener('fullscreenchange', () => {
+  document.addEventListener('fullscreenchange', function() {
     const btn = document.getElementById('fullscreen-btn');
-    if (btn) {
-      btn.textContent = document.fullscreenElement ? '⛶ Exit' : '⛶ Full';
-    }
+    if (btn) btn.textContent = document.fullscreenElement ? '⛶ Exit' : '⛶ Full';
   });
 
   function getCurrentSection() {
@@ -898,27 +813,22 @@
     const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const parts = dateStr.split('-');
     const targetMidnight = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-    const diffMs = targetMidnight - todayMidnight;
-    return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    return Math.ceil((targetMidnight - todayMidnight) / (1000 * 60 * 60 * 24));
   }
 
   function updateCountdownDisplay() {
     const sec = getCurrentSection();
     const days = getDaysRemaining(sec.targetDate);
     const pill = document.getElementById('countdown-pill');
-    if (days > 0) {
-      pill.textContent = `⏳ ${days} दिन शेष 📅`;
-    } else if (days === 0) {
-      pill.textContent = `🔥 आज परीक्षा है! 📅`;
-    } else {
-      pill.textContent = `✅ परीक्षा संपन्न (${Math.abs(days)} दिन पहले) 📅`;
-    }
+    if (days > 0) pill.textContent = '⏳ ' + days + ' दिन शेष 📅';
+    else if (days === 0) pill.textContent = '🔥 आज परीक्षा है! 📅';
+    else pill.textContent = '✅ परीक्षा संपन्न 📅';
   }
 
   function openDateModal() {
     const sec = getCurrentSection();
     const modeLabel = appState.activeMode === 'pt' ? 'PT (Prelims)' : 'MAINS';
-    document.getElementById('date-modal-title').textContent = `${modeLabel} Exam Date Set Karein`;
+    document.getElementById('date-modal-title').textContent = modeLabel + ' Exam Date Set Karein';
     document.getElementById('exam-date-input').value = sec.targetDate;
     document.getElementById('date-modal').classList.add('open');
   }
@@ -948,7 +858,7 @@
     document.getElementById('subject-dropdown').classList.toggle('open');
   }
 
-  document.addEventListener('click', () => {
+  document.addEventListener('click', function() {
     document.getElementById('subject-dropdown').classList.remove('open');
   });
 
@@ -973,7 +883,7 @@
     if (!hi) return;
 
     const newId = Date.now();
-    sec.subjects.push({ id: newId, hi, en, topics: [] });
+    sec.subjects.push({ id: newId, hi: hi, en: en, topics: [] });
     sec.selectedSubjectId = newId;
     hiInput.value = '';
     enInput.value = '';
@@ -985,8 +895,8 @@
   function editSubject(id, e) {
     e.stopPropagation();
     const sec = getCurrentSection();
-    const sub = sec.subjects.find(s => s.id === id);
-    openModal('Subject Edit Karein', sub.hi, sub.en, (v1, v2) => {
+    const sub = sec.subjects.find(function(s) { return s.id === id; });
+    openModal('Subject Edit Karein', sub.hi, sub.en, function(v1, v2) {
       if (v1.trim()) sub.hi = v1.trim();
       if (v2.trim()) sub.en = v2.trim();
       saveState();
@@ -997,7 +907,7 @@
     e.stopPropagation();
     const sec = getCurrentSection();
     if (sec.subjects.length <= 1) return;
-    sec.subjects = sec.subjects.filter(s => s.id !== id);
+    sec.subjects = sec.subjects.filter(function(s) { return s.id !== id; });
     if (sec.selectedSubjectId === id) {
       sec.selectedSubjectId = sec.subjects[0].id;
     }
@@ -1006,7 +916,7 @@
 
   function addTopic() {
     const sec = getCurrentSection();
-    const sub = sec.subjects.find(s => s.id === sec.selectedSubjectId);
+    const sub = sec.subjects.find(function(s) { return s.id === sec.selectedSubjectId; });
     if (!sub) return;
     const hiInput = document.getElementById('new-topic-hi');
     const enInput = document.getElementById('new-topic-en');
@@ -1014,12 +924,7 @@
     const en = enInput.value.trim() || sub.en;
     if (!hi) return;
 
-    sub.topics.push({
-      id: Date.now(),
-      hi,
-      en,
-      status: 'pending'
-    });
+    sub.topics.push({ id: Date.now(), hi: hi, en: en, status: 'pending' });
     hiInput.value = '';
     enInput.value = '';
     saveState();
@@ -1027,8 +932,8 @@
 
   function cycleTopicStatus(topicId) {
     const sec = getCurrentSection();
-    const sub = sec.subjects.find(s => s.id === sec.selectedSubjectId);
-    const topic = sub.topics.find(t => t.id === topicId);
+    const sub = sec.subjects.find(function(s) { return s.id === sec.selectedSubjectId; });
+    const topic = sub.topics.find(function(t) { return t.id === topicId; });
     if (topic.status === 'pending') topic.status = 'progress';
     else if (topic.status === 'progress') topic.status = 'done';
     else topic.status = 'pending';
@@ -1037,9 +942,9 @@
 
   function editTopic(topicId) {
     const sec = getCurrentSection();
-    const sub = sec.subjects.find(s => s.id === sec.selectedSubjectId);
-    const topic = sub.topics.find(t => t.id === topicId);
-    openModal('Topic Edit Karein', topic.hi, topic.en, (v1, v2) => {
+    const sub = sec.subjects.find(function(s) { return s.id === sec.selectedSubjectId; });
+    const topic = sub.topics.find(function(t) { return t.id === topicId; });
+    openModal('Topic Edit Karein', topic.hi, topic.en, function(v1, v2) {
       if (v1.trim()) topic.hi = v1.trim();
       topic.en = v2.trim() || sub.en;
       saveState();
@@ -1048,14 +953,14 @@
 
   function deleteTopic(topicId) {
     const sec = getCurrentSection();
-    const sub = sec.subjects.find(s => s.id === sec.selectedSubjectId);
-    sub.topics = sub.topics.filter(t => t.id !== topicId);
+    const sub = sec.subjects.find(function(s) { return s.id === sec.selectedSubjectId; });
+    sub.topics = sub.topics.filter(function(t) { return t.id !== topicId; });
     saveState();
   }
 
   function editBanner() {
     const sec = getCurrentSection();
-    openModal('Exam Header Banner Edit Karein', sec.banner, '', (v1) => {
+    openModal('Exam Header Banner Edit Karein', sec.banner, '', function(v1) {
       if (v1.trim()) {
         sec.banner = v1.trim();
         saveState();
@@ -1063,7 +968,7 @@
     }, true);
   }
 
-  function openModal(title, val1, val2, onSave, singleInput = false) {
+  function openModal(title, val1, val2, onSave, singleInput) {
     const modal = document.getElementById('edit-modal');
     const in1 = document.getElementById('modal-input-1');
     const in2 = document.getElementById('modal-input-2');
@@ -1072,7 +977,7 @@
     in2.value = val2;
     in2.style.display = singleInput ? 'none' : 'block';
     modal.classList.add('open');
-    document.getElementById('modal-save-btn').onclick = () => {
+    document.getElementById('modal-save-btn').onclick = function() {
       onSave(in1.value, in2.value);
       closeModal();
     };
@@ -1086,7 +991,7 @@
     const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `cse-tracker-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.download = 'cse-tracker-backup-' + new Date().toISOString().slice(0, 10) + '.json';
     a.click();
   }
 
@@ -1094,14 +999,14 @@
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => {
+    reader.onload = function(ev) {
       try {
         const parsed = JSON.parse(ev.target.result);
         if (parsed.pt && parsed.mains) {
           appState = parsed;
           saveState();
         }
-      } catch {}
+      } catch (err) {}
     };
     reader.readAsText(file);
   }
@@ -1112,11 +1017,9 @@
 
     updateCountdownDisplay();
 
-    // Update top mode tabs
     document.getElementById('tab-pt').classList.toggle('active', !isMains);
     document.getElementById('tab-mains').classList.toggle('active', isMains);
 
-    // Update Smart Board Header Text
     document.getElementById('exam-banner').textContent = sec.banner + ' ✏️';
     document.getElementById('title-hi').textContent = isMains ? 'मुख्य परीक्षा विषय' : 'प्रमुख विषय';
     document.getElementById('title-en').textContent = isMains ? 'SUBJECTS FOR MAINS' : 'SUBJECTS FOR PT';
@@ -1127,49 +1030,45 @@
       ? 'Customize MAINS Subjects (Add / Select)'
       : 'Customize PT Subjects (Add / Select)';
 
-    // Calculate Overall Section Progress (PT or MAINS)
     let allSectionTopics = 0;
     let allSectionDone = 0;
-    sec.subjects.forEach(s => {
+    sec.subjects.forEach(function(s) {
       allSectionTopics += s.topics.length;
-      allSectionDone += s.topics.filter(t => t.status === 'done').length;
+      allSectionDone += s.topics.filter(function(t) { return t.status === 'done'; }).length;
     });
     const overallPct = allSectionTopics === 0 ? 0 : Math.round((allSectionDone / allSectionTopics) * 100);
     const modeTag = isMains ? 'MAINS' : 'PT';
     document.getElementById('overall-progress-text').textContent =
-      `${modeTag} Overall Progress: ${allSectionDone} / ${allSectionTopics} Topics Completed`;
-    document.getElementById('overall-progress-pct').textContent = `${overallPct}%`;
-    document.getElementById('overall-progress-fill').style.width = `${overallPct}%`;
+      modeTag + ' Overall Progress: ' + allSectionDone + ' / ' + allSectionTopics + ' Topics Completed';
+    document.getElementById('overall-progress-pct').textContent = overallPct + '%';
+    document.getElementById('overall-progress-fill').style.width = overallPct + '%';
 
-    // Ensure valid selected subject
-    if (!sec.subjects.some(s => s.id === sec.selectedSubjectId) && sec.subjects.length > 0) {
+    if (!sec.subjects.some(function(s) { return s.id === sec.selectedSubjectId; }) && sec.subjects.length > 0) {
       sec.selectedSubjectId = sec.subjects[0].id;
     }
 
-    const activeIdx = sec.subjects.findIndex(s => s.id === sec.selectedSubjectId);
+    const activeIdx = sec.subjects.findIndex(function(s) { return s.id === sec.selectedSubjectId; });
     const activeSub = sec.subjects[activeIdx];
 
     document.getElementById('selected-sub-badge').textContent = activeSub ? activeSub.hi : 'Select';
 
-    // Render Dropdown List
     const dropList = document.getElementById('dropdown-subject-list');
-    dropList.innerHTML = sec.subjects.map((s, idx) => `
-      <div class="dropdown-item ${s.id === sec.selectedSubjectId ? 'active' : ''}" onclick="selectSubject(${s.id})">
-        <div class="dropdown-item-info">
-          <span class="mini-num">${padNum(idx + 1)}</span>
-          <div>
-            <div style="font-weight:800;font-size:0.98rem;">${s.hi}</div>
-            <div style="font-size:0.75rem;color:#CBD5E1;">${s.en} (${s.topics.length} Topics)</div>
-          </div>
-        </div>
-        <div class="dropdown-item-actions">
-          <button class="mini-action" onclick="editSubject(${s.id}, event)">✏️</button>
-          <button class="mini-action" style="color:#FCA5A5;" onclick="deleteSubject(${s.id}, event)">✕</button>
-        </div>
-      </div>
-    `).join('');
+    dropList.innerHTML = sec.subjects.map(function(s, idx) {
+      return '<div class="dropdown-item ' + (s.id === sec.selectedSubjectId ? 'active' : '') + '" onclick="selectSubject(' + s.id + ')">' +
+        '<div class="dropdown-item-info">' +
+          '<span class="mini-num">' + padNum(idx + 1) + '</span>' +
+          '<div>' +
+            '<div style="font-weight:800;font-size:0.98rem;">' + s.hi + '</div>' +
+            '<div style="font-size:0.75rem;color:#CBD5E1;">' + s.en + ' (' + s.topics.length + ' Topics)</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="dropdown-item-actions">' +
+          '<button class="mini-action" onclick="editSubject(' + s.id + ', event)">✏️</button>' +
+          '<button class="mini-action" style="color:#FCA5A5;" onclick="deleteSubject(' + s.id + ', event)">✕</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
 
-    // Toggle Topics View vs All Subjects Board Overview
     const topicsSection = document.getElementById('topics-view-section');
     const overviewSection = document.getElementById('subjects-overview-section');
     const viewBtn = document.getElementById('view-mode-btn');
@@ -1180,17 +1079,15 @@
       viewBtn.textContent = '📖 Back to Topics View';
 
       const allGrid = document.getElementById('all-subjects-grid');
-      allGrid.innerHTML = sec.subjects.map((s, idx) => {
-        const sDone = s.topics.filter(t => t.status === 'done').length;
-        return `
-          <div class="board-card" style="cursor:pointer;" onclick="selectSubject(${s.id})">
-            <div class="num-badge">${padNum(idx + 1)}</div>
-            <div class="card-text-wrap">
-              <div class="card-title-hi">${s.hi}</div>
-              <div class="card-title-en">${s.en} • ${sDone}/${s.topics.length} COMPLETED</div>
-            </div>
-          </div>
-        `;
+      allGrid.innerHTML = sec.subjects.map(function(s, idx) {
+        const sDone = s.topics.filter(function(t) { return t.status === 'done'; }).length;
+        return '<div class="board-card" style="cursor:pointer;" onclick="selectSubject(' + s.id + ')">' +
+          '<div class="num-badge">' + padNum(idx + 1) + '</div>' +
+          '<div class="card-text-wrap">' +
+            '<div class="card-title-hi">' + s.hi + '</div>' +
+            '<div class="card-title-en">' + s.en + ' • ' + sDone + '/' + s.topics.length + ' COMPLETED</div>' +
+          '</div>' +
+        '</div>';
       }).join('');
     } else {
       topicsSection.style.display = 'block';
@@ -1198,43 +1095,39 @@
       viewBtn.textContent = '🗂️ All Subjects Board';
 
       if (activeSub) {
-        const doneCount = activeSub.topics.filter(t => t.status === 'done').length;
+        const doneCount = activeSub.topics.filter(function(t) { return t.status === 'done'; }).length;
         const subPct = activeSub.topics.length === 0 ? 0 : Math.round((doneCount / activeSub.topics.length) * 100);
         document.getElementById('active-sub-heading').textContent =
-          `${padNum(activeIdx + 1)}. ${activeSub.hi} (${activeSub.en})`;
+          padNum(activeIdx + 1) + '. ' + activeSub.hi + ' (' + activeSub.en + ')';
         document.getElementById('active-sub-stats').textContent =
-          `${doneCount} / ${activeSub.topics.length} Completed (${subPct}%)`;
-        document.getElementById('sub-mini-fill').style.width = `${subPct}%`;
+          doneCount + ' / ' + activeSub.topics.length + ' Completed (' + subPct + '%)';
+        document.getElementById('sub-mini-fill').style.width = subPct + '%';
 
         const topicsGrid = document.getElementById('topics-grid');
         if (activeSub.topics.length === 0) {
-          topicsGrid.innerHTML = `
-            <div class="empty-state">
-              "${activeSub.hi}" mein abhi koi topic add nahi hai. Upar likhkar "+ Add Topic" par tap karein.
-            </div>
-          `;
+          topicsGrid.innerHTML = '<div class="empty-state">"' + activeSub.hi + '" mein abhi koi topic add nahi hai. Upar likhkar "+ Add Topic" par tap karein.</div>';
         } else {
           const stLabel = { pending: 'Pending', progress: 'In Progress', done: 'Done ✓' };
-          topicsGrid.innerHTML = activeSub.topics.map((t, tIdx) => `
-            <div class="board-card ${t.status === 'done' ? 'done' : ''}">
-              <div class="num-badge">${padNum(tIdx + 1)}</div>
-              <div class="card-text-wrap">
-                <div class="card-title-hi">${t.hi}</div>
-                <div class="card-title-en">${t.en}</div>
-              </div>
-              <div class="card-controls">
-                <button class="status-pill st-${t.status}" onclick="cycleTopicStatus(${t.id})">${stLabel[t.status]}</button>
-                <button class="card-icon-btn" onclick="editTopic(${t.id})">✏️</button>
-                <button class="card-icon-btn del" onclick="deleteTopic(${t.id})">✕</button>
-              </div>
-            </div>
-          `).join('');
+          topicsGrid.innerHTML = activeSub.topics.map(function(t, tIdx) {
+            return '<div class="board-card ' + (t.status === 'done' ? 'done' : '') + '">' +
+              '<div class="num-badge">' + padNum(tIdx + 1) + '</div>' +
+              '<div class="card-text-wrap">' +
+                '<div class="card-title-hi">' + t.hi + '</div>' +
+                '<div class="card-title-en">' + t.en + '</div>' +
+              '</div>' +
+              '<div class="card-controls">' +
+                '<button class="status-pill st-' + t.status + '" onclick="cycleTopicStatus(' + t.id + ')">' + stLabel[t.status] + '</button>' +
+                '<button class="card-icon-btn" onclick="editTopic(' + t.id + ')">✏️</button>' +
+                '<button class="card-icon-btn del" onclick="deleteTopic(' + t.id + ')">✕</button>' +
+              '</div>' +
+            '</div>';
+          }).join('');
         }
       }
     }
   }
 
-  document.getElementById('new-topic-hi').addEventListener('keydown', (e) => {
+  document.getElementById('new-topic-hi').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') addTopic();
   });
 
