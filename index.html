@@ -47,6 +47,59 @@
     flex-wrap: wrap;
   }
 
+  .top-left-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  /* EXAMS Dropdown Trigger Button */
+  .exam-switch-btn {
+    background: var(--navy-light);
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+
+  .exam-badge-pill {
+    background: var(--gold);
+    color: var(--text-navy);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 900;
+  }
+
+  /* EXAMS Customize Dropdown Menu */
+  .exam-dropdown {
+    display: none;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    width: 340px;
+    max-width: 92vw;
+    background: var(--navy-dark);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 15px;
+    z-index: 250;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65);
+  }
+
+  .exam-dropdown.open {
+    display: block;
+  }
+
   .mode-tabs {
     display: flex;
     background: var(--navy-bg);
@@ -58,9 +111,9 @@
 
   .mode-tab-btn {
     border: none;
-    padding: 8px 14px;
+    padding: 8px 13px;
     border-radius: 9px;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 900;
     cursor: pointer;
     background: transparent;
@@ -579,10 +632,30 @@
 <body>
 
 <div class="top-mode-bar">
-  <div class="mode-tabs">
-    <button class="mode-tab-btn active" id="tab-pt" onclick="switchMode('pt')">PT (PRELIMS)</button>
-    <button class="mode-tab-btn" id="tab-mains" onclick="switchMode('mains')">MAINS</button>
+  <div class="top-left-controls">
+    <!-- EXAMS Dropdown Section -->
+    <button class="exam-switch-btn" onclick="toggleExamDropdown(event)">
+      <span>🎯 EXAMS</span>
+      <span class="exam-badge-pill" id="active-exam-badge">72nd BPSC</span>
+      <span>▼</span>
+    </button>
+
+    <!-- Customize Exams Dropdown -->
+    <div class="exam-dropdown" id="exam-dropdown" onclick="event.stopPropagation()">
+      <div class="dropdown-heading">Customize Exams (Add / Select)</div>
+      <div class="custom-sub-form">
+        <input type="text" id="new-exam-name" class="board-input" placeholder="Exam ka naam (e.g. UPSC CSE, UGC NET)">
+        <button class="btn-gold" onclick="addCustomExam()">+ Add Custom Exam</button>
+      </div>
+      <div class="dropdown-list" id="dropdown-exam-list"></div>
+    </div>
+
+    <div class="mode-tabs">
+      <button class="mode-tab-btn active" id="tab-pt" onclick="switchMode('pt')">PT (PRELIMS)</button>
+      <button class="mode-tab-btn" id="tab-mains" onclick="switchMode('mains')">MAINS</button>
+    </div>
   </div>
+
   <div class="top-right-tools">
     <button class="reminder-pill" id="countdown-pill" onclick="openDateModal()">⏳ 56 दिन शेष 📅</button>
     <button class="fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()">⛶ Full</button>
@@ -652,7 +725,6 @@
       </div>
     </div>
 
-    <!-- Vertical Single-Column Topics List -->
     <div class="topics-vertical-list" id="topics-grid"></div>
   </div>
 
@@ -694,93 +766,183 @@
 </div>
 
 <script>
-  const STORAGE_KEY = 'bpsc_72_pt_mains_board_v1';
+  const LEGACY_STORAGE_KEY = 'bpsc_72_pt_mains_board_v1';
+  const MULTI_EXAM_KEY = 'cse_tracker_multi_exams_v2';
 
-  const defaultData = {
-    activeMode: 'pt',
-    pt: {
-      banner: '72nd BPSC PT | EXAM DATE: 17 JANUARY 2027',
-      targetDate: '2027-01-17',
-      selectedSubjectId: 1,
-      subjects: [
-        {
-          id: 1,
-          hi: 'इतिहास',
-          en: 'HISTORY',
-          topics: [
-            { id: 101, hi: 'सिंधु घाटी सभ्यता एवं वैदिक काल', en: 'ANCIENT INDIA', status: 'done' },
-            { id: 102, hi: '1857 की क्रांति और बिहार की भूमिका', en: 'MODERN HISTORY', status: 'progress' }
-          ]
-        },
-        { id: 2, hi: 'भूगोल', en: 'GEOGRAPHY', topics: [] },
-        { id: 3, hi: 'राजव्यवस्था', en: 'POLITY', topics: [] },
-        { id: 4, hi: 'अर्थव्यवस्था', en: 'ECONOMICS', topics: [] },
-        { id: 5, hi: 'सामान्य विज्ञान', en: 'GENERAL SCIENCE', topics: [] },
-        { id: 6, hi: 'बिहार विशेष', en: 'BIHAR SPECIAL', topics: [] },
-        { id: 7, hi: 'तर्कशक्ति एवं गणित', en: 'REASONING & MATH', topics: [] },
-        { id: 8, hi: 'समसामयिकी', en: 'CURRENT AFFAIRS', topics: [] }
-      ]
-    },
-    mains: {
-      banner: '72nd BPSC MAINS | मुख्य परीक्षा रणनीति',
-      targetDate: '2027-04-25',
-      selectedSubjectId: 201,
-      subjects: [
-        {
-          id: 201,
-          hi: 'सामान्य हिंदी',
-          en: 'GENERAL HINDI (QUALIFYING)',
-          topics: [
-            { id: 2001, hi: 'निबंध लेखन एवं व्याकरण अभ्यास', en: 'ESSAY & GRAMMAR', status: 'pending' }
-          ]
-        },
-        {
-          id: 202,
-          hi: 'निबंध',
-          en: 'ESSAY PAPER (300 MARKS)',
-          topics: [
-            { id: 2002, hi: 'दार्शनिक एवं सामाजिक निबंध', en: 'SECTION A & B', status: 'progress' },
-            { id: 2003, hi: 'बिहार की लोकोक्तियां एवं मुहावरे आधारित निबंध', en: 'SECTION C (BIHAR)', status: 'pending' }
-          ]
-        },
-        {
-          id: 203,
-          hi: 'सामान्य अध्ययन पेपर-1',
-          en: 'GS PAPER 1 (HISTORY, IR & DI)',
-          topics: [
-            { id: 2004, hi: 'मौर्य कला एवं पाल कला की विशेषताएं', en: 'ART & CULTURE', status: 'done' },
-            { id: 2005, hi: 'सांख्यिकी एवं डेटा इंटरप्रिटेशन (DI)', en: 'STATISTICS (72 MARKS)', status: 'progress' }
-          ]
-        },
-        {
-          id: 204,
-          hi: 'सामान्य अध्ययन पेपर-2',
-          en: 'GS PAPER 2 (POLITY, ECO & SCI-TECH)',
-          topics: [
-            { id: 2006, hi: 'भारतीय संघवाद एवं राज्यपाल की भूमिका', en: 'INDIAN POLITY', status: 'progress' }
-          ]
-        },
-        {
-          id: 205,
-          hi: 'वैकल्पिक विषय (PSIR)',
-          en: 'OPTIONAL SUBJECT (QUALIFYING)',
-          topics: []
-        }
-      ]
-    }
-  };
+  function createDefaultBPSC() {
+    return {
+      id: 'bpsc_72',
+      name: '72nd BPSC',
+      activeMode: 'pt',
+      pt: {
+        banner: '72nd BPSC PT | EXAM DATE: 17 JANUARY 2027',
+        targetDate: '2027-01-17',
+        selectedSubjectId: 1,
+        subjects: [
+          {
+            id: 1,
+            hi: 'इतिहास',
+            en: 'HISTORY',
+            topics: [
+              { id: 101, hi: 'सिंधु घाटी सभ्यता एवं वैदिक काल', en: 'ANCIENT INDIA', status: 'done' },
+              { id: 102, hi: '1857 की क्रांति और बिहार की भूमिका', en: 'MODERN HISTORY', status: 'progress' }
+            ]
+          },
+          { id: 2, hi: 'भूगोल', en: 'GEOGRAPHY', topics: [] },
+          { id: 3, hi: 'राजव्यवस्था', en: 'POLITY', topics: [] },
+          { id: 4, hi: 'अर्थव्यवस्था', en: 'ECONOMICS', topics: [] },
+          { id: 5, hi: 'सामान्य विज्ञान', en: 'GENERAL SCIENCE', topics: [] },
+          { id: 6, hi: 'बिहार विशेष', en: 'BIHAR SPECIAL', topics: [] },
+          { id: 7, hi: 'तर्कशक्ति एवं गणित', en: 'REASONING & MATH', topics: [] },
+          { id: 8, hi: 'समसामयिकी', en: 'CURRENT AFFAIRS', topics: [] }
+        ]
+      },
+      mains: {
+        banner: '72nd BPSC MAINS | मुख्य परीक्षा रणनीति',
+        targetDate: '2027-03-15',
+        selectedSubjectId: 201,
+        subjects: [
+          {
+            id: 201,
+            hi: 'सामान्य हिंदी',
+            en: 'GENERAL HINDI (QUALIFYING)',
+            topics: [
+              { id: 2001, hi: 'निबंध लेखन एवं व्याकरण अभ्यास', en: 'ESSAY & GRAMMAR', status: 'pending' }
+            ]
+          },
+          {
+            id: 202,
+            hi: 'निबंध',
+            en: 'ESSAY PAPER (300 MARKS)',
+            topics: [
+              { id: 2002, hi: 'दार्शनिक एवं सामाजिक निबंध', en: 'SECTION A & B', status: 'progress' },
+              { id: 2003, hi: 'बिहार की लोकोक्तियां एवं मुहावरे आधारित निबंध', en: 'SECTION C (BIHAR)', status: 'pending' }
+            ]
+          },
+          {
+            id: 203,
+            hi: 'सामान्य अध्ययन पेपर-1',
+            en: 'GS PAPER 1 (HISTORY, IR & DI)',
+            topics: [
+              { id: 2004, hi: 'मौर्य कला एवं पाल कला की विशेषताएं', en: 'ART & CULTURE', status: 'done' },
+              { id: 2005, hi: 'सांख्यिकी एवं डेटा इंटरप्रिटेशन (DI)', en: 'STATISTICS (72 MARKS)', status: 'progress' }
+            ]
+          },
+          {
+            id: 204,
+            hi: 'सामान्य अध्ययन पेपर-2',
+            en: 'GS PAPER 2 (POLITY, ECO & SCI-TECH)',
+            topics: [
+              { id: 2006, hi: 'भारतीय संघवाद एवं राज्यपाल की भूमिका', en: 'INDIAN POLITY', status: 'progress' }
+            ]
+          },
+          {
+            id: 205,
+            hi: 'वैकल्पिक विषय (PSIR)',
+            en: 'OPTIONAL SUBJECT (QUALIFYING)',
+            topics: []
+          }
+        ]
+      }
+    };
+  }
 
-  let appState = null;
+  function createDefaultUPSC() {
+    return {
+      id: 'upsc_2027',
+      name: 'UPSC CSE',
+      activeMode: 'pt',
+      pt: {
+        banner: 'UPSC CSE PRELIMS | EXAM DATE: 23 MAY 2027',
+        targetDate: '2027-05-23',
+        selectedSubjectId: 301,
+        subjects: [
+          {
+            id: 301,
+            hi: 'भारतीय राजव्यवस्था',
+            en: 'INDIAN POLITY (LAXMIKANTH)',
+            topics: [
+              { id: 3001, hi: 'मूल अधिकार एवं नीति निदेशक तत्व', en: 'FUNDAMENTAL RIGHTS & DPSP', status: 'pending' }
+            ]
+          },
+          { id: 302, hi: 'इतिहास एवं कला-संस्कृति', en: 'HISTORY & ART-CULTURE', topics: [] },
+          { id: 303, hi: 'भूगोल एवं पर्यावरण', en: 'GEOGRAPHY & ENVIRONMENT', topics: [] },
+          { id: 304, hi: 'भारतीय अर्थव्यवस्था', en: 'INDIAN ECONOMY', topics: [] },
+          { id: 305, hi: 'विज्ञान एवं प्रौद्योगिकी', en: 'SCIENCE & TECH', topics: [] },
+          { id: 306, hi: 'अंतर्राष्ट्रीय संबंध एवं करंट अफेयर्स', en: 'IR & CURRENT AFFAIRS', topics: [] },
+          { id: 307, hi: 'सीसैट (CSAT पेपर-2)', en: 'CSAT QUALIFYING', topics: [] }
+        ]
+      },
+      mains: {
+        banner: 'UPSC CSE MAINS | AUGUST 2027 रणनीति',
+        targetDate: '2027-08-20',
+        selectedSubjectId: 401,
+        subjects: [
+          { id: 401, hi: 'निबंध (ESSAY)', en: 'ESSAY PAPER (250 MARKS)', topics: [] },
+          { id: 402, hi: 'सामान्य अध्ययन पेपर-1', en: 'GS-1 (HISTORY, SOCIETY, GEO)', topics: [] },
+          { id: 403, hi: 'सामान्य अध्ययन पेपर-2', en: 'GS-2 (POLITY, GOVERNANCE, IR)', topics: [] },
+          { id: 404, hi: 'सामान्य अध्ययन पेपर-3', en: 'GS-3 (ECO, ENV, SCI-TECH, SECURITY)', topics: [] },
+          { id: 405, hi: 'सामान्य अध्ययन पेपर-4 (नीतिशास्त्र)', en: 'GS-4 (ETHICS, INTEGRITY & APTITUDE)', topics: [] },
+          { id: 406, hi: 'वैकल्पिक विषय पेपर-1 (PSIR)', en: 'PSIR OPTIONAL PAPER-1', topics: [] },
+          { id: 407, hi: 'वैकल्पिक विषय पेपर-2 (PSIR)', en: 'PSIR OPTIONAL PAPER-2', topics: [] }
+        ]
+      }
+    };
+  }
+
+  function createGenericExam(id, name) {
+    return {
+      id: id,
+      name: name,
+      activeMode: 'pt',
+      pt: {
+        banner: name + ' | PT / PAPER-1 TARGET',
+        targetDate: '2027-06-15',
+        selectedSubjectId: 1,
+        subjects: [
+          { id: 1, hi: 'प्रमुख खंड - 1', en: 'CORE MODULE 1', topics: [] },
+          { id: 2, hi: 'प्रमुख खंड - 2', en: 'CORE MODULE 2', topics: [] }
+        ]
+      },
+      mains: {
+        banner: name + ' | MAINS / PAPER-2 TARGET',
+        targetDate: '2027-09-15',
+        selectedSubjectId: 101,
+        subjects: [
+          { id: 101, hi: 'मुख्य खंड - 1', en: 'ADVANCED MODULE 1', topics: [] }
+        ]
+      }
+    };
+  }
+
+  let rootState = null;
   try {
-    appState = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    rootState = JSON.parse(localStorage.getItem(MULTI_EXAM_KEY));
   } catch (e) {
-    appState = null;
+    rootState = null;
   }
-  if (!appState || !appState.pt || !appState.mains) {
-    appState = JSON.parse(JSON.stringify(defaultData));
+
+  // Migrate existing BPSC data seamlessly if user already added topics
+  if (!rootState || !Array.isArray(rootState.exams) || rootState.exams.length === 0) {
+    let legacyBPSC = null;
+    try {
+      legacyBPSC = JSON.parse(localStorage.getItem(LEGACY_STORAGE_KEY));
+    } catch (e) {
+      legacyBPSC = null;
+    }
+
+    let firstExam = createDefaultBPSC();
+    if (legacyBPSC && legacyBPSC.pt && legacyBPSC.mains) {
+      firstExam.activeMode = legacyBPSC.activeMode || 'pt';
+      firstExam.pt = legacyBPSC.pt;
+      firstExam.mains = legacyBPSC.mains;
+    }
+
+    rootState = {
+      activeExamId: firstExam.id,
+      exams: [firstExam, createDefaultUPSC()]
+    };
   }
-  if (!appState.pt.targetDate) appState.pt.targetDate = '2027-01-17';
-  if (!appState.mains.targetDate) appState.mains.targetDate = '2027-04-25';
 
   let isOverview = false;
 
@@ -788,6 +950,25 @@
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('./sw.js').catch(function() {});
     });
+  }
+
+  function getActiveExam() {
+    let found = rootState.exams.find(function(ex) { return ex.id === rootState.activeExamId; });
+    if (!found) {
+      found = rootState.exams[0];
+      rootState.activeExamId = found.id;
+    }
+    return found;
+  }
+
+  function getCurrentSection() {
+    const exam = getActiveExam();
+    return exam[exam.activeMode];
+  }
+
+  function saveState() {
+    localStorage.setItem(MULTI_EXAM_KEY, JSON.stringify(rootState));
+    render();
   }
 
   function toggleFullscreen() {
@@ -807,15 +988,6 @@
     const btn = document.getElementById('fullscreen-btn');
     if (btn) btn.textContent = document.fullscreenElement ? '⛶ Exit' : '⛶ Full';
   });
-
-  function getCurrentSection() {
-    return appState[appState.activeMode];
-  }
-
-  function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-    render();
-  }
 
   function padNum(n) {
     return n < 10 ? '0' + n : '' + n;
@@ -839,9 +1011,10 @@
   }
 
   function openDateModal() {
+    const exam = getActiveExam();
     const sec = getCurrentSection();
-    const modeLabel = appState.activeMode === 'pt' ? 'PT (Prelims)' : 'MAINS';
-    document.getElementById('date-modal-title').textContent = modeLabel + ' Exam Date Set Karein';
+    const modeLabel = exam.activeMode === 'pt' ? 'PT (Prelims)' : 'MAINS';
+    document.getElementById('date-modal-title').textContent = exam.name + ' (' + modeLabel + ') Date Set Karein';
     document.getElementById('exam-date-input').value = sec.targetDate;
     document.getElementById('date-modal').classList.add('open');
   }
@@ -859,20 +1032,72 @@
     }
   }
 
+  /* EXAMS Dropdown Functions */
+  function toggleExamDropdown(e) {
+    e.stopPropagation();
+    document.getElementById('subject-dropdown').classList.remove('open');
+    document.getElementById('exam-dropdown').classList.toggle('open');
+  }
+
+  function selectExam(examId) {
+    rootState.activeExamId = examId;
+    isOverview = false;
+    document.getElementById('exam-dropdown').classList.remove('open');
+    saveState();
+  }
+
+  function addCustomExam() {
+    const inp = document.getElementById('new-exam-name');
+    const name = inp.value.trim();
+    if (!name) return;
+
+    const newId = 'exam_' + Date.now();
+    rootState.exams.push(createGenericExam(newId, name));
+    rootState.activeExamId = newId;
+    inp.value = '';
+    isOverview = false;
+    document.getElementById('exam-dropdown').classList.remove('open');
+    saveState();
+  }
+
+  function editExamName(examId, e) {
+    e.stopPropagation();
+    const ex = rootState.exams.find(function(item) { return item.id === examId; });
+    openModal('Exam Name Edit Karein', ex.name, '', function(v1) {
+      if (v1.trim()) {
+        ex.name = v1.trim();
+        saveState();
+      }
+    }, true);
+  }
+
+  function deleteExam(examId, e) {
+    e.stopPropagation();
+    if (rootState.exams.length <= 1) return;
+    rootState.exams = rootState.exams.filter(function(item) { return item.id !== examId; });
+    if (rootState.activeExamId === examId) {
+      rootState.activeExamId = rootState.exams[0].id;
+    }
+    saveState();
+  }
+
   function switchMode(mode) {
-    appState.activeMode = mode;
+    getActiveExam().activeMode = mode;
     isOverview = false;
     document.getElementById('subject-dropdown').classList.remove('open');
+    document.getElementById('exam-dropdown').classList.remove('open');
     saveState();
   }
 
   function toggleDropdown(e) {
     e.stopPropagation();
+    document.getElementById('exam-dropdown').classList.remove('open');
     document.getElementById('subject-dropdown').classList.toggle('open');
   }
 
   document.addEventListener('click', function() {
     document.getElementById('subject-dropdown').classList.remove('open');
+    document.getElementById('exam-dropdown').classList.remove('open');
   });
 
   function selectSubject(id) {
@@ -1001,10 +1226,10 @@
   }
 
   function exportBackup() {
-    const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(rootState, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'cse-tracker-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.download = 'cse-tracker-all-exams-backup-' + new Date().toISOString().slice(0, 10) + '.json';
     a.click();
   }
 
@@ -1015,8 +1240,13 @@
     reader.onload = function(ev) {
       try {
         const parsed = JSON.parse(ev.target.result);
-        if (parsed.pt && parsed.mains) {
-          appState = parsed;
+        if (parsed.exams && Array.isArray(parsed.exams)) {
+          rootState = parsed;
+          saveState();
+        } else if (parsed.pt && parsed.mains) {
+          const activeEx = getActiveExam();
+          activeEx.pt = parsed.pt;
+          activeEx.mains = parsed.mains;
           saveState();
         }
       } catch (err) {}
@@ -1025,10 +1255,27 @@
   }
 
   function render() {
-    const isMains = appState.activeMode === 'mains';
+    const activeExam = getActiveExam();
+    const isMains = activeExam.activeMode === 'mains';
     const sec = getCurrentSection();
 
     updateCountdownDisplay();
+
+    // Update Active Exam Badge & Dropdown List
+    document.getElementById('active-exam-badge').textContent = activeExam.name;
+    const examListEl = document.getElementById('dropdown-exam-list');
+    examListEl.innerHTML = rootState.exams.map(function(ex, idx) {
+      return '<div class="dropdown-item ' + (ex.id === activeExam.id ? 'active' : '') + '" onclick="selectExam(\'' + ex.id + '\')">' +
+        '<div class="dropdown-item-info">' +
+          '<span class="mini-num">' + padNum(idx + 1) + '</span>' +
+          '<div style="font-weight:900;font-size:0.98rem;">' + ex.name + '</div>' +
+        '</div>' +
+        '<div class="dropdown-item-actions">' +
+          '<button class="mini-action" onclick="editExamName(\'' + ex.id + '\', event)">✏️</button>' +
+          '<button class="mini-action" style="color:#FCA5A5;" onclick="deleteExam(\'' + ex.id + '\', event)">✕</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
 
     document.getElementById('tab-pt').classList.toggle('active', !isMains);
     document.getElementById('tab-mains').classList.toggle('active', isMains);
@@ -1037,11 +1284,11 @@
     document.getElementById('title-hi').textContent = isMains ? 'मुख्य परीक्षा विषय' : 'प्रमुख विषय';
     document.getElementById('title-en').textContent = isMains ? 'SUBJECTS FOR MAINS' : 'SUBJECTS FOR PT';
     document.getElementById('subtitle-text').textContent = isMains
-      ? 'मुख्य परीक्षा के सभी पेपर एवं वैकल्पिक विषय की तैयारी'
-      : 'सभी प्रमुख क्षेत्रों पर संतुलित तैयारी';
+      ? activeExam.name + ' मुख्य परीक्षा के सभी पेपर एवं वैकल्पिक विषय की तैयारी'
+      : activeExam.name + ' के सभी प्रमुख क्षेत्रों पर संतुलित तैयारी';
     document.getElementById('dropdown-mode-label').textContent = isMains
-      ? 'Customize MAINS Subjects (Add / Select)'
-      : 'Customize PT Subjects (Add / Select)';
+      ? 'Customize ' + activeExam.name + ' MAINS Subjects'
+      : 'Customize ' + activeExam.name + ' PT Subjects';
 
     let allSectionTopics = 0;
     let allSectionDone = 0;
@@ -1052,7 +1299,7 @@
     const overallPct = allSectionTopics === 0 ? 0 : Math.round((allSectionDone / allSectionTopics) * 100);
     const modeTag = isMains ? 'MAINS' : 'PT';
     document.getElementById('overall-progress-text').textContent =
-      modeTag + ' Overall Progress: ' + allSectionDone + ' / ' + allSectionTopics + ' Topics Completed';
+      activeExam.name + ' (' + modeTag + ') Progress: ' + allSectionDone + ' / ' + allSectionTopics + ' Topics Completed';
     document.getElementById('overall-progress-pct').textContent = overallPct + '%';
     document.getElementById('overall-progress-fill').style.width = overallPct + '%';
 
