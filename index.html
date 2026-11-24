@@ -525,14 +525,12 @@
     color-scheme: dark;
   }
 
-  /* 100% Single-Column Vertical List for Topics */
   .topics-vertical-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  /* 2-Column Grid for All Subjects Overview */
   .board-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -593,7 +591,6 @@
     margin-top: 2px;
   }
 
-  /* Green Last Revision, Red Next Revision & Priority Pills inside Topic Card */
   .card-rev-row {
     display: flex;
     flex-wrap: wrap;
@@ -632,7 +629,6 @@
     cursor: pointer;
   }
 
-  /* Priority Button Styles (High = Red) */
   .prio-pill {
     padding: 4px 10px;
     border-radius: 8px;
@@ -661,7 +657,6 @@
     color: #0369A1;
   }
 
-  /* Red Strikethrough Line when Topic is Done */
   .board-card.done .card-title-hi {
     text-decoration: line-through;
     text-decoration-color: #DC2626;
@@ -767,14 +762,12 @@
 
 <div class="top-mode-bar">
   <div class="top-left-controls">
-    <!-- EXAMS Dropdown Section -->
     <button class="exam-switch-btn" onclick="toggleExamDropdown(event)">
       <span>🎯 EXAMS</span>
       <span class="exam-badge-pill" id="active-exam-badge">72nd BPSC</span>
       <span>▼</span>
     </button>
 
-    <!-- Customize Exams Dropdown -->
     <div class="exam-dropdown" id="exam-dropdown" onclick="event.stopPropagation()">
       <div class="dropdown-heading">Customize Exams (Add / Select)</div>
       <div class="custom-sub-form">
@@ -1420,11 +1413,32 @@
   }
 
   function exportBackup() {
-    const blob = new Blob([JSON.stringify(rootState, null, 2)], { type: 'application/json' });
+    const jsonStr = JSON.stringify(rootState, null, 2);
+    const fileName = 'cse-tracker-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(jsonStr).catch(function() {});
+    }
+
+    try {
+      const file = new File([jsonStr], fileName, { type: 'application/json' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({
+          files: [file],
+          title: 'CSE TRACKER Backup'
+        }).catch(function() {});
+        return;
+      }
+    } catch (e) {}
+
+    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonStr);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'cse-tracker-all-exams-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.href = dataUri;
+    a.download = fileName;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+    alert('Backup taiyar hai! (Data Clipboard par bhi copy ho gaya hai)');
   }
 
   function importBackup(e) {
