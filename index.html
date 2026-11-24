@@ -38,7 +38,6 @@
     padding-bottom: 50px;
   }
 
-  /* Slim, Clean Single-Row Top Bar (No bulky black strip) */
   .top-mode-bar {
     position: sticky;
     top: 0;
@@ -482,10 +481,25 @@
     gap: 2px;
   }
 
+  .rev-date-box.last-box {
+    border-color: #22C55E;
+  }
+
+  .rev-date-box.last-box label {
+    color: #4ADE80;
+  }
+
+  .rev-date-box.next-box {
+    border-color: #EF4444;
+  }
+
+  .rev-date-box.next-box label {
+    color: #F87171;
+  }
+
   .rev-date-box label {
     font-size: 0.72rem;
     font-weight: 800;
-    color: var(--gold);
     text-transform: uppercase;
   }
 
@@ -551,7 +565,6 @@
     min-width: 0;
   }
 
-  /* Larger Bold Topic Text */
   .card-title-hi {
     font-size: 1.38rem;
     font-weight: 900;
@@ -569,7 +582,7 @@
     margin-top: 2px;
   }
 
-  /* Interactive Last Revision & Next Revision Calendar Pills inside Topic Card */
+  /* Green Last Revision & Red Next Revision Calendar Pills inside Topic Card */
   .card-rev-row {
     display: flex;
     flex-wrap: wrap;
@@ -582,9 +595,9 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: #F1F5F9;
-    border: 1.5px solid #CBD5E1;
-    color: #1E3246;
+    background: #DCFCE7;
+    border: 1.5px solid #22C55E;
+    color: #15803D;
     padding: 4px 9px;
     border-radius: 8px;
     font-size: 0.78rem;
@@ -593,9 +606,9 @@
   }
 
   .rev-cal-pill.next {
-    background: #FEF9C3;
-    border-color: #F4C844;
-    color: #854D0E;
+    background: #FEE2E2;
+    border-color: #EF4444;
+    color: #DC2626;
   }
 
   .rev-cal-pill input[type="date"] {
@@ -804,11 +817,11 @@
         <button class="btn-gold" onclick="addTopic()">+ Add Topic</button>
       </div>
       <div class="rev-input-group">
-        <div class="rev-date-box">
+        <div class="rev-date-box last-box">
           <label for="new-topic-last-rev">📅 Last Revision (Calendar)</label>
           <input type="date" id="new-topic-last-rev">
         </div>
-        <div class="rev-date-box">
+        <div class="rev-date-box next-box">
           <label for="new-topic-next-rev">⏰ Next Revision (Calendar)</label>
           <input type="date" id="new-topic-next-rev">
         </div>
