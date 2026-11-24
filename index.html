@@ -757,7 +757,7 @@
     margin-top: 4px;
   }
 
-  /* Clean Backup & Restore Modal Matching Screenshot */
+  /* Backup & Restore Data Modal */
   .br-modal-box {
     background: #FAF5F0;
     color: #231F20;
@@ -1010,7 +1010,7 @@
   </div>
 </div>
 
-<!-- Backup & Restore Data Modal (Exact Design from Screenshot) -->
+<!-- Backup & Restore Data Modal -->
 <div class="modal-backdrop" id="br-modal" onclick="closeBackupRestoreModal()">
   <div class="br-modal-box" onclick="event.stopPropagation()">
     <div class="br-header">
@@ -1547,7 +1547,7 @@
     document.getElementById('edit-modal').classList.remove('open');
   }
 
-  /* Backup & Restore Data Modal Functions */
+  /* Backup & Restore Data Modal Functions (WebIntoApp APK Compatible) */
   function openBackupRestoreModal() {
     document.getElementById('br-modal').classList.add('open');
   }
@@ -1558,16 +1558,14 @@
 
   function exportSyllabusBackup() {
     const jsonStr = JSON.stringify(rootState, null, 2);
-    const fileName = 'Syllabus_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
-    const blob = new Blob([jsonStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+    const fileName = 'CSE_Tracker_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(jsonStr);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
+    a.setAttribute('href', dataStr);
+    a.setAttribute('download', fileName);
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    a.remove();
   }
 
   function importBackup(e) {
