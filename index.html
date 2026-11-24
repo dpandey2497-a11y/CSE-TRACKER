@@ -921,22 +921,23 @@
   </div>
 </div>
 
-<!-- Clean Backup Modal (No messy WebView Download popup) -->
+<!-- Clean Backup Modal with Direct WhatsApp & Telegram Buttons -->
 <div class="modal-backdrop" id="backup-modal">
   <div class="modal-box">
     <div class="modal-title">⬇️ Backup Data (JSON)</div>
-    <div style="font-size:0.85rem;color:#CBD5E1;">Niche diye gaye button se apna backup Copy karke WhatsApp / Notes mein save karein ya Share karein:</div>
+    <div style="font-size:0.85rem;color:#CBD5E1;">Apna backup code seedhe WhatsApp / Telegram par bhejein ya Copy karke save rakhein:</div>
     <textarea id="backup-text-area" class="backup-textarea" readonly></textarea>
     <div id="backup-status-msg" style="font-size:0.82rem;color:#4ADE80;font-weight:800;display:none;">✓ Backup Code Copy Ho Gaya!</div>
     <div class="modal-actions">
       <button class="overview-toggle-btn" onclick="closeBackupModal()">Close</button>
-      <button class="overview-toggle-btn" onclick="shareBackupText()">📤 Share</button>
-      <button class="btn-gold" onclick="copyBackupText()">📋 Copy Backup</button>
+      <button class="overview-toggle-btn" style="border-color:#22C55E;color:#4ADE80;" onclick="shareToWhatsApp()">💬 WhatsApp</button>
+      <button class="overview-toggle-btn" style="border-color:#38BDF8;color:#38BDF8;" onclick="shareToTelegram()">✈️ Telegram</button>
+      <button class="btn-gold" onclick="copyBackupText()">📋 Copy</button>
     </div>
   </div>
 </div>
 
-<!-- Clean Restore Modal (Supports both File & Paste) -->
+<!-- Clean Restore Modal -->
 <div class="modal-backdrop" id="restore-modal">
   <div class="modal-box">
     <div class="modal-title">⬆️ Restore Data (JSON)</div>
@@ -1458,7 +1459,7 @@
     document.getElementById('edit-modal').classList.remove('open');
   }
 
-  /* Clean WebView-Friendly Backup & Restore Modals */
+  /* Backup & Restore with Direct WhatsApp & Telegram Links */
   function openBackupModal() {
     const area = document.getElementById('backup-text-area');
     const msg = document.getElementById('backup-status-msg');
@@ -1486,16 +1487,18 @@
     msg.style.display = 'block';
   }
 
-  function shareBackupText() {
+  function shareToWhatsApp() {
+    copyBackupText();
     const textData = document.getElementById('backup-text-area').value;
-    if (navigator.share) {
-      navigator.share({
-        title: 'CSE TRACKER Backup (' + new Date().toISOString().slice(0, 10) + ')',
-        text: textData
-      }).catch(function() {});
-    } else {
-      copyBackupText();
-    }
+    const encoded = encodeURIComponent(textData);
+    window.location.href = 'whatsapp://send?text=' + encoded;
+  }
+
+  function shareToTelegram() {
+    copyBackupText();
+    const textData = document.getElementById('backup-text-area').value;
+    const encoded = encodeURIComponent(textData);
+    window.location.href = 'https://t.me/share/url?url=&text=' + encoded;
   }
 
   function openRestoreModal() {
