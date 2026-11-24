@@ -738,7 +738,7 @@
     border-radius: 16px;
     padding: 20px;
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -755,21 +755,111 @@
     justify-content: flex-end;
     gap: 8px;
     margin-top: 4px;
-    flex-wrap: wrap;
   }
 
-  .backup-textarea {
+  /* Clean Backup & Restore Modal Matching Screenshot */
+  .br-modal-box {
+    background: #FAF5F0;
+    color: #231F20;
+    border-radius: 22px;
+    padding: 22px 20px;
     width: 100%;
-    height: 110px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1.5px solid rgba(244, 200, 68, 0.45);
-    background: var(--navy-bg);
-    color: #E2E8F0;
-    font-size: 0.78rem;
-    font-family: monospace;
-    resize: none;
-    outline: none;
+    max-width: 430px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .br-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E6DDD5;
+  }
+
+  .br-header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.18rem;
+    font-weight: 900;
+    color: #1E1B18;
+  }
+
+  .br-icon-badge {
+    background: #C85A32;
+    color: #FFFFFF;
+    width: 28px;
+    height: 24px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 900;
+  }
+
+  .br-close-btn {
+    background: transparent;
+    border: none;
+    color: #78716C;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 6px;
+  }
+
+  .br-desc {
+    font-size: 0.94rem;
+    color: #57534E;
+    line-height: 1.45;
+  }
+
+  .br-export-btn {
+    width: 100%;
+    background: #231F20;
+    color: #FFFFFF;
+    border: none;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .br-restore-btn {
+    width: 100%;
+    background: #F5EFEA;
+    color: #231F20;
+    border: 1.5px solid #D6CCC2;
+    padding: 13px 16px;
+    border-radius: 14px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .br-reset-btn {
+    background: transparent;
+    border: none;
+    color: #DC2626;
+    font-size: 0.94rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    padding: 4px;
+    margin-top: 2px;
   }
 </style>
 </head>
@@ -890,8 +980,7 @@
   </div>
 
   <div class="footer-tools">
-    <button class="overview-toggle-btn" onclick="openBackupModal()">⬇️ Backup JSON</button>
-    <button class="overview-toggle-btn" onclick="openRestoreModal()">⬆️ Restore JSON</button>
+    <button class="overview-toggle-btn" onclick="openBackupRestoreModal()">💾 Backup &amp; Restore Data</button>
   </div>
 </div>
 
@@ -921,36 +1010,35 @@
   </div>
 </div>
 
-<!-- Clean Backup Modal with Direct WhatsApp & Telegram Buttons -->
-<div class="modal-backdrop" id="backup-modal">
-  <div class="modal-box">
-    <div class="modal-title">⬇️ Backup Data (JSON)</div>
-    <div style="font-size:0.85rem;color:#CBD5E1;">Apna backup code seedhe WhatsApp / Telegram par bhejein ya Copy karke save rakhein:</div>
-    <textarea id="backup-text-area" class="backup-textarea" readonly></textarea>
-    <div id="backup-status-msg" style="font-size:0.82rem;color:#4ADE80;font-weight:800;display:none;">✓ Backup Code Copy Ho Gaya!</div>
-    <div class="modal-actions">
-      <button class="overview-toggle-btn" onclick="closeBackupModal()">Close</button>
-      <button class="overview-toggle-btn" style="border-color:#22C55E;color:#4ADE80;" onclick="shareToWhatsApp()">💬 WhatsApp</button>
-      <button class="overview-toggle-btn" style="border-color:#38BDF8;color:#38BDF8;" onclick="shareToTelegram()">✈️ Telegram</button>
-      <button class="btn-gold" onclick="copyBackupText()">📋 Copy</button>
+<!-- Backup & Restore Data Modal (Exact Design from Screenshot) -->
+<div class="modal-backdrop" id="br-modal" onclick="closeBackupRestoreModal()">
+  <div class="br-modal-box" onclick="event.stopPropagation()">
+    <div class="br-header">
+      <div class="br-header-title">
+        <span class="br-icon-badge">..</span>
+        <span>Backup &amp; Restore Data</span>
+      </div>
+      <button class="br-close-btn" onclick="closeBackupRestoreModal()">✕</button>
     </div>
-  </div>
-</div>
 
-<!-- Clean Restore Modal -->
-<div class="modal-backdrop" id="restore-modal">
-  <div class="modal-box">
-    <div class="modal-title">⬆️ Restore Data (JSON)</div>
-    <div style="font-size:0.85rem;color:#CBD5E1;">Apni .json file chunein ya copy kiya hua backup code yahan paste karein:</div>
-    <label class="overview-toggle-btn" style="text-align:center;cursor:pointer;">
-      📁 Choose .JSON File
-      <input type="file" accept=".json" onchange="importBackupFile(event)" style="display:none;">
-    </label>
-    <textarea id="restore-text-area" class="backup-textarea" placeholder="Ya yahan backup code paste karein..."></textarea>
-    <div class="modal-actions">
-      <button class="overview-toggle-btn" onclick="closeRestoreModal()">Cancel</button>
-      <button class="btn-gold" onclick="restoreFromText()">Restore Now</button>
+    <div class="br-desc">
+      Aapka study data browser ke Local Storage me saved rehta hai. File export karke save rakhein ya nayi device par restore karein.
     </div>
+
+    <button class="br-export-btn" onclick="exportSyllabusBackup()">
+      <span>⬇️</span>
+      <span>Export Syllabus Backup (.json)</span>
+    </button>
+
+    <label class="br-restore-btn">
+      <span>⬆️</span>
+      <span>Restore from JSON Backup</span>
+      <input type="file" accept=".json" onchange="importBackup(event)" style="display:none;">
+    </label>
+
+    <button class="br-reset-btn" onclick="resetAllToDefault()">
+      Reset All to Default Syllabus
+    </button>
   </div>
 </div>
 
@@ -1459,96 +1547,67 @@
     document.getElementById('edit-modal').classList.remove('open');
   }
 
-  /* Backup & Restore with Direct WhatsApp & Telegram Links */
-  function openBackupModal() {
-    const area = document.getElementById('backup-text-area');
-    const msg = document.getElementById('backup-status-msg');
-    area.value = JSON.stringify(rootState, null, 2);
-    msg.style.display = 'none';
-    document.getElementById('backup-modal').classList.add('open');
+  /* Backup & Restore Data Modal Functions */
+  function openBackupRestoreModal() {
+    document.getElementById('br-modal').classList.add('open');
   }
 
-  function closeBackupModal() {
-    document.getElementById('backup-modal').classList.remove('open');
+  function closeBackupRestoreModal() {
+    document.getElementById('br-modal').classList.remove('open');
   }
 
-  function copyBackupText() {
-    const area = document.getElementById('backup-text-area');
-    const msg = document.getElementById('backup-status-msg');
-    area.select();
-    area.setSelectionRange(0, 999999);
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(area.value).catch(function() {
-        document.execCommand('copy');
-      });
-    } else {
-      document.execCommand('copy');
-    }
-    msg.style.display = 'block';
+  function exportSyllabusBackup() {
+    const jsonStr = JSON.stringify(rootState, null, 2);
+    const fileName = 'Syllabus_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
   }
 
-  function shareToWhatsApp() {
-    copyBackupText();
-    const textData = document.getElementById('backup-text-area').value;
-    const encoded = encodeURIComponent(textData);
-    window.location.href = 'whatsapp://send?text=' + encoded;
-  }
-
-  function shareToTelegram() {
-    copyBackupText();
-    const textData = document.getElementById('backup-text-area').value;
-    const encoded = encodeURIComponent(textData);
-    window.location.href = 'https://t.me/share/url?url=&text=' + encoded;
-  }
-
-  function openRestoreModal() {
-    document.getElementById('restore-text-area').value = '';
-    document.getElementById('restore-modal').classList.add('open');
-  }
-
-  function closeRestoreModal() {
-    document.getElementById('restore-modal').classList.remove('open');
-  }
-
-  function applyParsedBackup(parsed) {
-    if (parsed && parsed.exams && Array.isArray(parsed.exams)) {
-      rootState = parsed;
-      saveState();
-      closeRestoreModal();
-      alert('✓ Data successfully restore ho gaya!');
-    } else if (parsed && parsed.pt && parsed.mains) {
-      const activeEx = getActiveExam();
-      activeEx.pt = parsed.pt;
-      activeEx.mains = parsed.mains;
-      saveState();
-      closeRestoreModal();
-      alert('✓ Data successfully restore ho gaya!');
-    } else {
-      alert('Galat backup format!');
-    }
-  }
-
-  function importBackupFile(e) {
+  function importBackup(e) {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function(ev) {
       try {
-        applyParsedBackup(JSON.parse(ev.target.result));
+        const parsed = JSON.parse(ev.target.result);
+        if (parsed && parsed.exams && Array.isArray(parsed.exams)) {
+          rootState = parsed;
+          saveState();
+          closeBackupRestoreModal();
+          alert('✓ Syllabus Backup successfully restore ho gaya!');
+        } else if (parsed && parsed.pt && parsed.mains) {
+          const activeEx = getActiveExam();
+          activeEx.pt = parsed.pt;
+          activeEx.mains = parsed.mains;
+          saveState();
+          closeBackupRestoreModal();
+          alert('✓ Syllabus Backup successfully restore ho gaya!');
+        } else {
+          alert('Galat JSON backup file!');
+        }
       } catch (err) {
         alert('File read nahi ho payi.');
       }
     };
     reader.readAsText(file);
+    e.target.value = '';
   }
 
-  function restoreFromText() {
-    const raw = document.getElementById('restore-text-area').value.trim();
-    if (!raw) return;
-    try {
-      applyParsedBackup(JSON.parse(raw));
-    } catch (err) {
-      alert('Sahi backup JSON code paste karein.');
+  function resetAllToDefault() {
+    if (confirm('Kya aap sach mein saara data reset karke Default Syllabus wapas lana chahte hain?')) {
+      rootState = {
+        activeExamId: 'bpsc_72',
+        exams: [createDefaultBPSC(), createDefaultUPSC()]
+      };
+      saveState();
+      closeBackupRestoreModal();
     }
   }
 
