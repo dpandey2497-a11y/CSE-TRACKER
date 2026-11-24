@@ -738,7 +738,7 @@
     border-radius: 16px;
     padding: 20px;
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -755,6 +755,21 @@
     justify-content: flex-end;
     gap: 8px;
     margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .backup-textarea {
+    width: 100%;
+    height: 110px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(244, 200, 68, 0.45);
+    background: var(--navy-bg);
+    color: #E2E8F0;
+    font-size: 0.78rem;
+    font-family: monospace;
+    resize: none;
+    outline: none;
   }
 </style>
 </head>
@@ -875,14 +890,12 @@
   </div>
 
   <div class="footer-tools">
-    <button class="overview-toggle-btn" onclick="exportBackup()">⬇️ Backup JSON</button>
-    <label class="overview-toggle-btn" style="cursor:pointer;">
-      ⬆️ Restore JSON
-      <input type="file" accept=".json" onchange="importBackup(event)" style="display:none;">
-    </label>
+    <button class="overview-toggle-btn" onclick="openBackupModal()">⬇️ Backup JSON</button>
+    <button class="overview-toggle-btn" onclick="openRestoreModal()">⬆️ Restore JSON</button>
   </div>
 </div>
 
+<!-- Edit Modal -->
 <div class="modal-backdrop" id="edit-modal">
   <div class="modal-box">
     <div class="modal-title" id="modal-title">Edit</div>
@@ -895,6 +908,7 @@
   </div>
 </div>
 
+<!-- Date Modal -->
 <div class="modal-backdrop" id="date-modal">
   <div class="modal-box">
     <div class="modal-title" id="date-modal-title">Target Exam Date Set Karein</div>
@@ -903,6 +917,38 @@
     <div class="modal-actions">
       <button class="overview-toggle-btn" onclick="closeDateModal()">Cancel</button>
       <button class="btn-gold" onclick="saveExamDate()">Save Date</button>
+    </div>
+  </div>
+</div>
+
+<!-- Clean Backup Modal (No messy WebView Download popup) -->
+<div class="modal-backdrop" id="backup-modal">
+  <div class="modal-box">
+    <div class="modal-title">⬇️ Backup Data (JSON)</div>
+    <div style="font-size:0.85rem;color:#CBD5E1;">Niche diye gaye button se apna backup Copy karke WhatsApp / Notes mein save karein ya Share karein:</div>
+    <textarea id="backup-text-area" class="backup-textarea" readonly></textarea>
+    <div id="backup-status-msg" style="font-size:0.82rem;color:#4ADE80;font-weight:800;display:none;">✓ Backup Code Copy Ho Gaya!</div>
+    <div class="modal-actions">
+      <button class="overview-toggle-btn" onclick="closeBackupModal()">Close</button>
+      <button class="overview-toggle-btn" onclick="shareBackupText()">📤 Share</button>
+      <button class="btn-gold" onclick="copyBackupText()">📋 Copy Backup</button>
+    </div>
+  </div>
+</div>
+
+<!-- Clean Restore Modal (Supports both File & Paste) -->
+<div class="modal-backdrop" id="restore-modal">
+  <div class="modal-box">
+    <div class="modal-title">⬆️ Restore Data (JSON)</div>
+    <div style="font-size:0.85rem;color:#CBD5E1;">Apni .json file chunein ya copy kiya hua backup code yahan paste karein:</div>
+    <label class="overview-toggle-btn" style="text-align:center;cursor:pointer;">
+      📁 Choose .JSON File
+      <input type="file" accept=".json" onchange="importBackupFile(event)" style="display:none;">
+    </label>
+    <textarea id="restore-text-area" class="backup-textarea" placeholder="Ya yahan backup code paste karein..."></textarea>
+    <div class="modal-actions">
+      <button class="overview-toggle-btn" onclick="closeRestoreModal()">Cancel</button>
+      <button class="btn-gold" onclick="restoreFromText()">Restore Now</button>
     </div>
   </div>
 </div>
@@ -1412,54 +1458,95 @@
     document.getElementById('edit-modal').classList.remove('open');
   }
 
-  function exportBackup() {
-    const jsonStr = JSON.stringify(rootState, null, 2);
-    const fileName = 'cse-tracker-backup-' + new Date().toISOString().slice(0, 10) + '.json';
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(jsonStr).catch(function() {});
-    }
-
-    try {
-      const file = new File([jsonStr], fileName, { type: 'application/json' });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-          files: [file],
-          title: 'CSE TRACKER Backup'
-        }).catch(function() {});
-        return;
-      }
-    } catch (e) {}
-
-    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonStr);
-    const a = document.createElement('a');
-    a.href = dataUri;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    alert('Backup taiyar hai! (Data Clipboard par bhi copy ho gaya hai)');
+  /* Clean WebView-Friendly Backup & Restore Modals */
+  function openBackupModal() {
+    const area = document.getElementById('backup-text-area');
+    const msg = document.getElementById('backup-status-msg');
+    area.value = JSON.stringify(rootState, null, 2);
+    msg.style.display = 'none';
+    document.getElementById('backup-modal').classList.add('open');
   }
 
-  function importBackup(e) {
+  function closeBackupModal() {
+    document.getElementById('backup-modal').classList.remove('open');
+  }
+
+  function copyBackupText() {
+    const area = document.getElementById('backup-text-area');
+    const msg = document.getElementById('backup-status-msg');
+    area.select();
+    area.setSelectionRange(0, 999999);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(area.value).catch(function() {
+        document.execCommand('copy');
+      });
+    } else {
+      document.execCommand('copy');
+    }
+    msg.style.display = 'block';
+  }
+
+  function shareBackupText() {
+    const textData = document.getElementById('backup-text-area').value;
+    if (navigator.share) {
+      navigator.share({
+        title: 'CSE TRACKER Backup (' + new Date().toISOString().slice(0, 10) + ')',
+        text: textData
+      }).catch(function() {});
+    } else {
+      copyBackupText();
+    }
+  }
+
+  function openRestoreModal() {
+    document.getElementById('restore-text-area').value = '';
+    document.getElementById('restore-modal').classList.add('open');
+  }
+
+  function closeRestoreModal() {
+    document.getElementById('restore-modal').classList.remove('open');
+  }
+
+  function applyParsedBackup(parsed) {
+    if (parsed && parsed.exams && Array.isArray(parsed.exams)) {
+      rootState = parsed;
+      saveState();
+      closeRestoreModal();
+      alert('✓ Data successfully restore ho gaya!');
+    } else if (parsed && parsed.pt && parsed.mains) {
+      const activeEx = getActiveExam();
+      activeEx.pt = parsed.pt;
+      activeEx.mains = parsed.mains;
+      saveState();
+      closeRestoreModal();
+      alert('✓ Data successfully restore ho gaya!');
+    } else {
+      alert('Galat backup format!');
+    }
+  }
+
+  function importBackupFile(e) {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function(ev) {
       try {
-        const parsed = JSON.parse(ev.target.result);
-        if (parsed.exams && Array.isArray(parsed.exams)) {
-          rootState = parsed;
-          saveState();
-        } else if (parsed.pt && parsed.mains) {
-          const activeEx = getActiveExam();
-          activeEx.pt = parsed.pt;
-          activeEx.mains = parsed.mains;
-          saveState();
-        }
-      } catch (err) {}
+        applyParsedBackup(JSON.parse(ev.target.result));
+      } catch (err) {
+        alert('File read nahi ho payi.');
+      }
     };
     reader.readAsText(file);
+  }
+
+  function restoreFromText() {
+    const raw = document.getElementById('restore-text-area').value.trim();
+    if (!raw) return;
+    try {
+      applyParsedBackup(JSON.parse(raw));
+    } catch (err) {
+      alert('Sahi backup JSON code paste karein.');
+    }
   }
 
   function render() {
