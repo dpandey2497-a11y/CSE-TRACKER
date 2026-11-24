@@ -26,67 +26,71 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
   }
 
-  body {
+  html, body {
     background-color: var(--navy-bg);
     color: var(--white);
     min-height: 100vh;
-    padding-bottom: 60px;
+    margin: 0;
+    padding: 0;
   }
 
+  body {
+    padding-bottom: 50px;
+  }
+
+  /* Slim, Clean Single-Row Top Bar (No bulky black strip) */
   .top-mode-bar {
     position: sticky;
     top: 0;
     z-index: 200;
-    background: var(--navy-dark);
-    border-bottom: 2px solid rgba(244, 200, 68, 0.35);
-    padding: 10px 14px;
+    background: var(--navy-bg);
+    border-bottom: 1.5px solid rgba(244, 200, 68, 0.35);
+    padding: 7px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
   }
 
   .top-left-controls {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
     position: relative;
   }
 
-  /* EXAMS Dropdown Trigger Button */
   .exam-switch-btn {
-    background: var(--navy-light);
+    background: var(--navy-dark);
     border: 1.5px solid var(--gold);
     color: var(--gold);
-    padding: 8px 12px;
-    border-radius: 12px;
-    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 0.85rem;
     font-weight: 900;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
     white-space: nowrap;
   }
 
   .exam-badge-pill {
     background: var(--gold);
     color: var(--text-navy);
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-size: 0.82rem;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.8rem;
     font-weight: 900;
   }
 
-  /* EXAMS Customize Dropdown Menu */
   .exam-dropdown {
     display: none;
     position: absolute;
-    top: 48px;
+    top: 44px;
     left: 0;
-    width: 340px;
+    width: 330px;
     max-width: 92vw;
     background: var(--navy-dark);
     border: 2px solid var(--gold);
@@ -102,18 +106,18 @@
 
   .mode-tabs {
     display: flex;
-    background: var(--navy-bg);
-    padding: 4px;
-    border-radius: 12px;
+    background: var(--navy-dark);
+    padding: 3px;
+    border-radius: 10px;
     border: 1.5px solid rgba(244, 200, 68, 0.45);
-    gap: 4px;
+    gap: 3px;
   }
 
   .mode-tab-btn {
     border: none;
-    padding: 8px 13px;
-    border-radius: 9px;
-    font-size: 0.88rem;
+    padding: 6px 11px;
+    border-radius: 7px;
+    font-size: 0.84rem;
     font-weight: 900;
     cursor: pointer;
     background: transparent;
@@ -130,28 +134,27 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    flex-wrap: wrap;
   }
 
   .reminder-pill {
-    background: rgba(244, 200, 68, 0.14);
+    background: var(--navy-dark);
     border: 1.5px solid var(--gold);
     color: var(--gold);
-    padding: 7px 11px;
+    padding: 6px 10px;
     border-radius: 10px;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     font-weight: 900;
     cursor: pointer;
     white-space: nowrap;
   }
 
   .fullscreen-btn {
-    background: var(--navy-light);
+    background: var(--navy-dark);
     border: 1.5px solid rgba(244, 200, 68, 0.55);
     color: var(--white);
-    padding: 7px 11px;
+    padding: 6px 10px;
     border-radius: 10px;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     font-weight: 800;
     cursor: pointer;
     white-space: nowrap;
@@ -160,7 +163,7 @@
   .board-wrapper {
     max-width: 960px;
     margin: 0 auto;
-    padding: 18px 16px;
+    padding: 14px 16px;
   }
 
   .exam-banner {
@@ -169,7 +172,7 @@
     color: var(--gold);
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     cursor: pointer;
   }
 
@@ -178,7 +181,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .main-title-hi {
@@ -204,7 +207,7 @@
   .subtitle {
     font-size: 0.95rem;
     color: #CBD5E1;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
   .gold-line {
@@ -212,22 +215,22 @@
     width: 100%;
     background: var(--gold);
     border-radius: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .progress-card {
     background: rgba(255, 255, 255, 0.07);
     border: 1.5px solid rgba(244, 200, 68, 0.4);
     border-radius: 14px;
-    padding: 13px 16px;
-    margin-bottom: 18px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
   }
 
   .progress-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 9px;
+    margin-bottom: 8px;
     font-size: 0.95rem;
     font-weight: 800;
   }
@@ -260,16 +263,16 @@
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .subject-tab-btn {
     background: var(--gold);
     color: var(--text-navy);
     border: none;
-    padding: 12px 18px;
+    padding: 11px 16px;
     border-radius: 12px;
-    font-size: 1rem;
+    font-size: 0.98rem;
     font-weight: 900;
     cursor: pointer;
     display: flex;
@@ -281,9 +284,9 @@
     background: var(--navy-light);
     color: var(--white);
     border: 1.5px solid rgba(244, 200, 68, 0.5);
-    padding: 12px 16px;
+    padding: 11px 15px;
     border-radius: 12px;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 700;
     cursor: pointer;
   }
@@ -291,7 +294,7 @@
   .subject-dropdown {
     display: none;
     position: absolute;
-    top: 56px;
+    top: 52px;
     left: 0;
     width: 100%;
     max-width: 480px;
@@ -406,8 +409,8 @@
     background: rgba(255, 255, 255, 0.06);
     border: 1.5px solid rgba(244, 200, 68, 0.35);
     border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 20px;
+    padding: 15px;
+    margin-bottom: 18px;
   }
 
   .active-sub-top {
@@ -437,7 +440,7 @@
     background: var(--navy-dark);
     border-radius: 99px;
     overflow: hidden;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
   .sub-mini-fill {
@@ -451,11 +454,50 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    align-items: center;
   }
 
-  .add-topic-bar input {
+  .add-topic-bar input[type="text"] {
     flex: 1;
-    min-width: 180px;
+    min-width: 170px;
+  }
+
+  .rev-input-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .rev-date-box {
+    flex: 1;
+    min-width: 145px;
+    background: var(--navy-bg);
+    border: 1.5px solid rgba(244, 200, 68, 0.45);
+    border-radius: 10px;
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .rev-date-box label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .rev-date-box input[type="date"] {
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 0.88rem;
+    font-weight: 700;
+    outline: none;
+    width: 100%;
+    color-scheme: dark;
   }
 
   /* 100% Single-Column Vertical List for Topics */
@@ -519,12 +561,50 @@
   }
 
   .card-title-en {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 800;
     color: #3B5978;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-top: 3px;
+    margin-top: 2px;
+  }
+
+  /* Interactive Last Revision & Next Revision Calendar Pills inside Topic Card */
+  .card-rev-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .rev-cal-pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #F1F5F9;
+    border: 1.5px solid #CBD5E1;
+    color: #1E3246;
+    padding: 4px 9px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .rev-cal-pill.next {
+    background: #FEF9C3;
+    border-color: #F4C844;
+    color: #854D0E;
+  }
+
+  .rev-cal-pill input[type="date"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
   }
 
   /* Red Strikethrough Line when Topic is Done */
@@ -657,7 +737,7 @@
   </div>
 
   <div class="top-right-tools">
-    <button class="reminder-pill" id="countdown-pill" onclick="openDateModal()">⏳ 56 दिन शेष 📅</button>
+    <button class="reminder-pill" id="countdown-pill" onclick="openDateModal()">⏳ 54 दिन शेष 📅</button>
     <button class="fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()">⛶ Full</button>
   </div>
 </div>
@@ -720,8 +800,18 @@
       </div>
       <div class="add-topic-bar">
         <input type="text" id="new-topic-hi" class="board-input" placeholder="Topic ka naam likhein (Hindi/English)...">
-        <input type="text" id="new-topic-en" class="board-input" placeholder="Sub-note / Tag (Optional)..." style="max-width:220px;">
+        <input type="text" id="new-topic-en" class="board-input" placeholder="Sub-note / Tag (Optional)..." style="max-width:210px;">
         <button class="btn-gold" onclick="addTopic()">+ Add Topic</button>
+      </div>
+      <div class="rev-input-group">
+        <div class="rev-date-box">
+          <label for="new-topic-last-rev">📅 Last Revision (Calendar)</label>
+          <input type="date" id="new-topic-last-rev">
+        </div>
+        <div class="rev-date-box">
+          <label for="new-topic-next-rev">⏰ Next Revision (Calendar)</label>
+          <input type="date" id="new-topic-next-rev">
+        </div>
       </div>
     </div>
 
@@ -784,8 +874,8 @@
             hi: 'इतिहास',
             en: 'HISTORY',
             topics: [
-              { id: 101, hi: 'सिंधु घाटी सभ्यता एवं वैदिक काल', en: 'ANCIENT INDIA', status: 'done' },
-              { id: 102, hi: '1857 की क्रांति और बिहार की भूमिका', en: 'MODERN HISTORY', status: 'progress' }
+              { id: 101, hi: 'सिंधु घाटी सभ्यता एवं वैदिक काल', en: 'ANCIENT INDIA', status: 'done', lastRev: '', nextRev: '' },
+              { id: 102, hi: '1857 की क्रांति और बिहार की भूमिका', en: 'MODERN HISTORY', status: 'progress', lastRev: '', nextRev: '' }
             ]
           },
           { id: 2, hi: 'भूगोल', en: 'GEOGRAPHY', topics: [] },
@@ -807,7 +897,7 @@
             hi: 'सामान्य हिंदी',
             en: 'GENERAL HINDI (QUALIFYING)',
             topics: [
-              { id: 2001, hi: 'निबंध लेखन एवं व्याकरण अभ्यास', en: 'ESSAY & GRAMMAR', status: 'pending' }
+              { id: 2001, hi: 'निबंध लेखन एवं व्याकरण अभ्यास', en: 'ESSAY & GRAMMAR', status: 'pending', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -815,8 +905,8 @@
             hi: 'निबंध',
             en: 'ESSAY PAPER (300 MARKS)',
             topics: [
-              { id: 2002, hi: 'दार्शनिक एवं सामाजिक निबंध', en: 'SECTION A & B', status: 'progress' },
-              { id: 2003, hi: 'बिहार की लोकोक्तियां एवं मुहावरे आधारित निबंध', en: 'SECTION C (BIHAR)', status: 'pending' }
+              { id: 2002, hi: 'दार्शनिक एवं सामाजिक निबंध', en: 'SECTION A & B', status: 'progress', lastRev: '', nextRev: '' },
+              { id: 2003, hi: 'बिहार की लोकोक्तियां एवं मुहावरे आधारित निबंध', en: 'SECTION C (BIHAR)', status: 'pending', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -824,8 +914,8 @@
             hi: 'सामान्य अध्ययन पेपर-1',
             en: 'GS PAPER 1 (HISTORY, IR & DI)',
             topics: [
-              { id: 2004, hi: 'मौर्य कला एवं पाल कला की विशेषताएं', en: 'ART & CULTURE', status: 'done' },
-              { id: 2005, hi: 'सांख्यिकी एवं डेटा इंटरप्रिटेशन (DI)', en: 'STATISTICS (72 MARKS)', status: 'progress' }
+              { id: 2004, hi: 'मौर्य कला एवं पाल कला की विशेषताएं', en: 'ART & CULTURE', status: 'done', lastRev: '', nextRev: '' },
+              { id: 2005, hi: 'सांख्यिकी एवं डेटा इंटरप्रिटेशन (DI)', en: 'STATISTICS (72 MARKS)', status: 'progress', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -833,7 +923,7 @@
             hi: 'सामान्य अध्ययन पेपर-2',
             en: 'GS PAPER 2 (POLITY, ECO & SCI-TECH)',
             topics: [
-              { id: 2006, hi: 'भारतीय संघवाद एवं राज्यपाल की भूमिका', en: 'INDIAN POLITY', status: 'progress' }
+              { id: 2006, hi: 'भारतीय संघवाद एवं राज्यपाल की भूमिका', en: 'INDIAN POLITY', status: 'progress', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -862,7 +952,7 @@
             hi: 'भारतीय राजव्यवस्था',
             en: 'INDIAN POLITY (LAXMIKANTH)',
             topics: [
-              { id: 3001, hi: 'मूल अधिकार एवं नीति निदेशक तत्व', en: 'FUNDAMENTAL RIGHTS & DPSP', status: 'pending' }
+              { id: 3001, hi: 'मूल अधिकार एवं नीति निदेशक तत्व', en: 'FUNDAMENTAL RIGHTS & DPSP', status: 'pending', lastRev: '', nextRev: '' }
             ]
           },
           { id: 302, hi: 'इतिहास एवं कला-संस्कृति', en: 'HISTORY & ART-CULTURE', topics: [] },
@@ -922,7 +1012,6 @@
     rootState = null;
   }
 
-  // Migrate existing BPSC data seamlessly if user already added topics
   if (!rootState || !Array.isArray(rootState.exams) || rootState.exams.length === 0) {
     let legacyBPSC = null;
     try {
@@ -993,6 +1082,15 @@
     return n < 10 ? '0' + n : '' + n;
   }
 
+  function formatDisplayDate(dateStr) {
+    if (!dateStr) return 'Select Date';
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return dateStr;
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const mIdx = parseInt(parts[1], 10) - 1;
+    return parts[2] + ' ' + (months[mIdx] || parts[1]) + ' ' + parts[0].slice(2);
+  }
+
   function getDaysRemaining(dateStr) {
     const now = new Date();
     const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -1032,7 +1130,6 @@
     }
   }
 
-  /* EXAMS Dropdown Functions */
   function toggleExamDropdown(e) {
     e.stopPropagation();
     document.getElementById('subject-dropdown').classList.remove('open');
@@ -1158,13 +1255,35 @@
     if (!sub) return;
     const hiInput = document.getElementById('new-topic-hi');
     const enInput = document.getElementById('new-topic-en');
+    const lastRevInput = document.getElementById('new-topic-last-rev');
+    const nextRevInput = document.getElementById('new-topic-next-rev');
+
     const hi = hiInput.value.trim();
     const en = enInput.value.trim() || sub.en;
     if (!hi) return;
 
-    sub.topics.push({ id: Date.now(), hi: hi, en: en, status: 'pending' });
+    sub.topics.push({
+      id: Date.now(),
+      hi: hi,
+      en: en,
+      status: 'pending',
+      lastRev: lastRevInput.value || '',
+      nextRev: nextRevInput.value || ''
+    });
     hiInput.value = '';
     enInput.value = '';
+    lastRevInput.value = '';
+    nextRevInput.value = '';
+    saveState();
+  }
+
+  function updateTopicRevision(topicId, field, value) {
+    const sec = getCurrentSection();
+    const sub = sec.subjects.find(function(s) { return s.id === sec.selectedSubjectId; });
+    if (!sub) return;
+    const topic = sub.topics.find(function(t) { return t.id === topicId; });
+    if (!topic) return;
+    topic[field] = value;
     saveState();
   }
 
@@ -1261,7 +1380,6 @@
 
     updateCountdownDisplay();
 
-    // Update Active Exam Badge & Dropdown List
     document.getElementById('active-exam-badge').textContent = activeExam.name;
     const examListEl = document.getElementById('dropdown-exam-list');
     examListEl.innerHTML = rootState.exams.map(function(ex, idx) {
@@ -1369,11 +1487,23 @@
         } else {
           const stLabel = { pending: 'Pending', progress: 'In Progress', done: 'Done ✓' };
           topicsGrid.innerHTML = activeSub.topics.map(function(t, tIdx) {
+            const lastRevVal = t.lastRev || '';
+            const nextRevVal = t.nextRev || '';
             return '<div class="board-card ' + (t.status === 'done' ? 'done' : '') + '">' +
               '<div class="num-badge">' + padNum(tIdx + 1) + '</div>' +
               '<div class="card-text-wrap">' +
                 '<div class="card-title-hi">' + t.hi + '</div>' +
                 '<div class="card-title-en">' + t.en + '</div>' +
+                '<div class="card-rev-row">' +
+                  '<label class="rev-cal-pill">' +
+                    '<span>📅 Last Rev: <strong>' + formatDisplayDate(lastRevVal) + '</strong></span>' +
+                    '<input type="date" value="' + lastRevVal + '" onchange="updateTopicRevision(' + t.id + ', \'lastRev\', this.value)">' +
+                  '</label>' +
+                  '<label class="rev-cal-pill next">' +
+                    '<span>⏰ Next Rev: <strong>' + formatDisplayDate(nextRevVal) + '</strong></span>' +
+                    '<input type="date" value="' + nextRevVal + '" onchange="updateTopicRevision(' + t.id + ', \'nextRev\', this.value)">' +
+                  '</label>' +
+                '</div>' +
               '</div>' +
               '<div class="card-controls">' +
                 '<button class="status-pill st-' + t.status + '" onclick="cycleTopicStatus(' + t.id + ')">' + stLabel[t.status] + '</button>' +
