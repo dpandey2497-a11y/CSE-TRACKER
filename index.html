@@ -461,6 +461,17 @@
     min-width: 170px;
   }
 
+  .priority-select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(244, 200, 68, 0.45);
+    background: var(--navy-bg);
+    color: var(--white);
+    font-size: 0.9rem;
+    font-weight: 700;
+    outline: none;
+  }
+
   .rev-input-group {
     display: flex;
     gap: 8px;
@@ -582,12 +593,13 @@
     margin-top: 2px;
   }
 
-  /* Green Last Revision & Red Next Revision Calendar Pills inside Topic Card */
+  /* Green Last Revision, Red Next Revision & Priority Pills inside Topic Card */
   .card-rev-row {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 8px;
+    align-items: center;
   }
 
   .rev-cal-pill {
@@ -618,6 +630,35 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+  }
+
+  /* Priority Button Styles (High = Red) */
+  .prio-pill {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    text-transform: uppercase;
+  }
+
+  .prio-high {
+    background: #FEE2E2;
+    border-color: #DC2626;
+    color: #DC2626;
+  }
+
+  .prio-medium {
+    background: #FEF3C7;
+    border-color: #D97706;
+    color: #B45309;
+  }
+
+  .prio-low {
+    background: #E0F2FE;
+    border-color: #0284C7;
+    color: #0369A1;
   }
 
   /* Red Strikethrough Line when Topic is Done */
@@ -813,7 +854,12 @@
       </div>
       <div class="add-topic-bar">
         <input type="text" id="new-topic-hi" class="board-input" placeholder="Topic ka naam likhein (Hindi/English)...">
-        <input type="text" id="new-topic-en" class="board-input" placeholder="Sub-note / Tag (Optional)..." style="max-width:210px;">
+        <input type="text" id="new-topic-en" class="board-input" placeholder="Sub-note / Tag (Optional)..." style="max-width:190px;">
+        <select id="new-topic-priority" class="priority-select" title="Priority">
+          <option value="medium">Priority: Medium</option>
+          <option value="high">Priority: High</option>
+          <option value="low">Priority: Low</option>
+        </select>
         <button class="btn-gold" onclick="addTopic()">+ Add Topic</button>
       </div>
       <div class="rev-input-group">
@@ -887,8 +933,8 @@
             hi: 'इतिहास',
             en: 'HISTORY',
             topics: [
-              { id: 101, hi: 'सिंधु घाटी सभ्यता एवं वैदिक काल', en: 'ANCIENT INDIA', status: 'done', lastRev: '', nextRev: '' },
-              { id: 102, hi: '1857 की क्रांति और बिहार की भूमिका', en: 'MODERN HISTORY', status: 'progress', lastRev: '', nextRev: '' }
+              { id: 101, hi: 'सिंधु घाटी सभ्यता एवं वैदिक काल', en: 'ANCIENT INDIA', status: 'done', priority: 'high', lastRev: '', nextRev: '' },
+              { id: 102, hi: '1857 की क्रांति और बिहार की भूमिका', en: 'MODERN HISTORY', status: 'progress', priority: 'medium', lastRev: '', nextRev: '' }
             ]
           },
           { id: 2, hi: 'भूगोल', en: 'GEOGRAPHY', topics: [] },
@@ -910,7 +956,7 @@
             hi: 'सामान्य हिंदी',
             en: 'GENERAL HINDI (QUALIFYING)',
             topics: [
-              { id: 2001, hi: 'निबंध लेखन एवं व्याकरण अभ्यास', en: 'ESSAY & GRAMMAR', status: 'pending', lastRev: '', nextRev: '' }
+              { id: 2001, hi: 'निबंध लेखन एवं व्याकरण अभ्यास', en: 'ESSAY & GRAMMAR', status: 'pending', priority: 'medium', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -918,8 +964,8 @@
             hi: 'निबंध',
             en: 'ESSAY PAPER (300 MARKS)',
             topics: [
-              { id: 2002, hi: 'दार्शनिक एवं सामाजिक निबंध', en: 'SECTION A & B', status: 'progress', lastRev: '', nextRev: '' },
-              { id: 2003, hi: 'बिहार की लोकोक्तियां एवं मुहावरे आधारित निबंध', en: 'SECTION C (BIHAR)', status: 'pending', lastRev: '', nextRev: '' }
+              { id: 2002, hi: 'दार्शनिक एवं सामाजिक निबंध', en: 'SECTION A & B', status: 'progress', priority: 'high', lastRev: '', nextRev: '' },
+              { id: 2003, hi: 'बिहार की लोकोक्तियां एवं मुहावरे आधारित निबंध', en: 'SECTION C (BIHAR)', status: 'pending', priority: 'medium', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -927,8 +973,8 @@
             hi: 'सामान्य अध्ययन पेपर-1',
             en: 'GS PAPER 1 (HISTORY, IR & DI)',
             topics: [
-              { id: 2004, hi: 'मौर्य कला एवं पाल कला की विशेषताएं', en: 'ART & CULTURE', status: 'done', lastRev: '', nextRev: '' },
-              { id: 2005, hi: 'सांख्यिकी एवं डेटा इंटरप्रिटेशन (DI)', en: 'STATISTICS (72 MARKS)', status: 'progress', lastRev: '', nextRev: '' }
+              { id: 2004, hi: 'मौर्य कला एवं पाल कला की विशेषताएं', en: 'ART & CULTURE', status: 'done', priority: 'high', lastRev: '', nextRev: '' },
+              { id: 2005, hi: 'सांख्यिकी एवं डेटा इंटरप्रिटेशन (DI)', en: 'STATISTICS (72 MARKS)', status: 'progress', priority: 'high', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -936,7 +982,7 @@
             hi: 'सामान्य अध्ययन पेपर-2',
             en: 'GS PAPER 2 (POLITY, ECO & SCI-TECH)',
             topics: [
-              { id: 2006, hi: 'भारतीय संघवाद एवं राज्यपाल की भूमिका', en: 'INDIAN POLITY', status: 'progress', lastRev: '', nextRev: '' }
+              { id: 2006, hi: 'भारतीय संघवाद एवं राज्यपाल की भूमिका', en: 'INDIAN POLITY', status: 'progress', priority: 'medium', lastRev: '', nextRev: '' }
             ]
           },
           {
@@ -965,7 +1011,7 @@
             hi: 'भारतीय राजव्यवस्था',
             en: 'INDIAN POLITY (LAXMIKANTH)',
             topics: [
-              { id: 3001, hi: 'मूल अधिकार एवं नीति निदेशक तत्व', en: 'FUNDAMENTAL RIGHTS & DPSP', status: 'pending', lastRev: '', nextRev: '' }
+              { id: 3001, hi: 'मूल अधिकार एवं नीति निदेशक तत्व', en: 'FUNDAMENTAL RIGHTS & DPSP', status: 'pending', priority: 'high', lastRev: '', nextRev: '' }
             ]
           },
           { id: 302, hi: 'इतिहास एवं कला-संस्कृति', en: 'HISTORY & ART-CULTURE', topics: [] },
@@ -1268,6 +1314,7 @@
     if (!sub) return;
     const hiInput = document.getElementById('new-topic-hi');
     const enInput = document.getElementById('new-topic-en');
+    const prioInput = document.getElementById('new-topic-priority');
     const lastRevInput = document.getElementById('new-topic-last-rev');
     const nextRevInput = document.getElementById('new-topic-next-rev');
 
@@ -1280,13 +1327,28 @@
       hi: hi,
       en: en,
       status: 'pending',
+      priority: prioInput ? prioInput.value : 'medium',
       lastRev: lastRevInput.value || '',
       nextRev: nextRevInput.value || ''
     });
     hiInput.value = '';
     enInput.value = '';
+    if (prioInput) prioInput.value = 'medium';
     lastRevInput.value = '';
     nextRevInput.value = '';
+    saveState();
+  }
+
+  function cycleTopicPriority(topicId) {
+    const sec = getCurrentSection();
+    const sub = sec.subjects.find(function(s) { return s.id === sec.selectedSubjectId; });
+    if (!sub) return;
+    const topic = sub.topics.find(function(t) { return t.id === topicId; });
+    if (!topic) return;
+    const current = topic.priority || 'medium';
+    if (current === 'medium') topic.priority = 'high';
+    else if (current === 'high') topic.priority = 'low';
+    else topic.priority = 'medium';
     saveState();
   }
 
@@ -1499,15 +1561,18 @@
           topicsGrid.innerHTML = '<div class="empty-state">"' + activeSub.hi + '" mein abhi koi topic add nahi hai. Upar likhkar "+ Add Topic" par tap karein.</div>';
         } else {
           const stLabel = { pending: 'Pending', progress: 'In Progress', done: 'Done ✓' };
+          const prioLabel = { high: 'High', medium: 'Medium', low: 'Low' };
           topicsGrid.innerHTML = activeSub.topics.map(function(t, tIdx) {
             const lastRevVal = t.lastRev || '';
             const nextRevVal = t.nextRev || '';
+            const prio = t.priority || 'medium';
             return '<div class="board-card ' + (t.status === 'done' ? 'done' : '') + '">' +
               '<div class="num-badge">' + padNum(tIdx + 1) + '</div>' +
               '<div class="card-text-wrap">' +
                 '<div class="card-title-hi">' + t.hi + '</div>' +
                 '<div class="card-title-en">' + t.en + '</div>' +
                 '<div class="card-rev-row">' +
+                  '<button class="prio-pill prio-' + prio + '" onclick="cycleTopicPriority(' + t.id + ')">🚩 ' + prioLabel[prio] + '</button>' +
                   '<label class="rev-cal-pill">' +
                     '<span>📅 Last Rev: <strong>' + formatDisplayDate(lastRevVal) + '</strong></span>' +
                     '<input type="date" value="' + lastRevVal + '" onchange="updateTopicRevision(' + t.id + ', \'lastRev\', this.value)">' +
